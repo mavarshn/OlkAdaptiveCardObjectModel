@@ -11,24 +11,24 @@ class HttpAction : public BaseActionElement
 public:
     HttpAction();
 
-    static std::shared_ptr<HttpAction> Deserialize(const Json::Value& root);
-    static std::shared_ptr<HttpAction> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<HttpAction> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<HttpAction> DeserializeFromString(const std::wstring& jsonString);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
-    std::string GetUrl() const;
-    void SetUrl(const std::string value);
+    std::wstring GetUrl() const;
+    void SetUrl(const std::wstring value);
 
-    std::string GetMethod() const;
-    void SetMethod(const std::string value);
+    std::wstring GetMethod() const;
+    void SetMethod(const std::wstring value);
 
-    std::string GetBody() const;
-    void SetBody(const std::string value);
+    std::wstring GetBody() const;
+    void SetBody(const std::wstring value);
 
 private:
-    std::string m_method;
-    std::string m_body;
-    std::string m_url;
+    std::wstring m_method;
+    std::wstring m_body;
+    std::wstring m_url;
 };
 }

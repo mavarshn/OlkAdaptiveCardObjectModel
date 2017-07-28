@@ -2,7 +2,8 @@
 
 #include "stdafx.h"
 #include "Enums.h"
-#include "json/json.h"
+#include <jsondom/ijsondom.h>
+#include <jsondom/JsonCommon.h>
 #include "BaseActionElement.h"
 #include "ParseUtil.h"
 
@@ -12,7 +13,7 @@ class Container;
 class BaseCardElement
 {
 public:
-    BaseCardElement(CardElementType type, SeparationStyle separationStyle, std::string speak);
+    BaseCardElement(CardElementType type, SeparationStyle separationStyle, std::wstring speak);
     BaseCardElement(CardElementType type);
 
     virtual ~BaseCardElement();
@@ -20,31 +21,31 @@ public:
     SeparationStyle GetSeparationStyle() const;
     void SetSeparationStyle(const SeparationStyle value);
 
-    std::string GetSpeak() const;
-    void SetSpeak(const std::string value);
+    std::wstring GetSpeak() const;
+    void SetSpeak(const std::wstring value);
 
     const CardElementType GetElementType() const;
 
-    virtual std::string Serialize() = 0;
+    virtual std::wstring Serialize() = 0;
 
     template <typename T>
-    static std::shared_ptr<T> Deserialize(const Json::Value& json);
+    static std::shared_ptr<T> Deserialize(const Mso::Json::value& json);
 
-    virtual Json::Value SerializeToJsonValue();
+    virtual Mso::Json::value SerializeToJsonValue();
 
 protected:
-    static std::shared_ptr<BaseActionElement> DeserializeSelectAction(const Json::Value& json, AdaptiveCardSchemaKey key);
-    static Json::Value SerializeSelectAction(const std::shared_ptr<BaseActionElement> selectAction);
+    static std::shared_ptr<BaseActionElement> DeserializeSelectAction(const Mso::Json::value& json, AdaptiveCardSchemaKey key);
+    static Mso::Json::value SerializeSelectAction(const std::shared_ptr<BaseActionElement> selectAction);
 
 private:
-    static const std::unordered_map<ActionType, std::function<std::shared_ptr<BaseActionElement>(const Json::Value&)>, EnumHash> ActionParsers;
+    static const std::unordered_map<ActionType, std::function<std::shared_ptr<BaseActionElement>(const Mso::Json::value&)>, EnumHash> ActionParsers;
     CardElementType m_type;
     SeparationStyle m_separationStyle;
-    std::string m_speak;
+    std::wstring m_speak;
 };
 
 template <typename T>
-std::shared_ptr<T> BaseCardElement::Deserialize(const Json::Value& json)
+std::shared_ptr<T> BaseCardElement::Deserialize(const Mso::Json::value& json)
 {
     std::shared_ptr<T> cardElement = std::make_shared<T>();
     std::shared_ptr<BaseCardElement> baseCardElement = cardElement;

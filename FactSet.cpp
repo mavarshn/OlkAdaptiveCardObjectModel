@@ -11,7 +11,7 @@ FactSet::FactSet() : BaseCardElement(CardElementType::FactSet)
 
 FactSet::FactSet(
     SeparationStyle separation,
-    std::string speak,
+    std::wstring speak,
     std::vector<std::shared_ptr<Fact>>& facts) :
     BaseCardElement(CardElementType::FactSet, separation, speak),
     m_facts(facts)
@@ -20,7 +20,7 @@ FactSet::FactSet(
 
 FactSet::FactSet(
     SeparationStyle separation,
-    std::string speak) :
+    std::wstring speak) :
     BaseCardElement(CardElementType::FactSet, separation, speak)
 {
 }
@@ -35,27 +35,29 @@ std::vector<std::shared_ptr<Fact>>& FactSet::GetFacts()
     return m_facts;
 }
 
-std::string FactSet::Serialize()
+std::wstring FactSet::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value FactSet::SerializeToJsonValue()
+Mso::Json::value FactSet::SerializeToJsonValue()
 {
-    Json::Value root = BaseCardElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseCardElement::SerializeToJsonValue();
 
-    std::string factsPropertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Facts);
-    root[factsPropertyName] = Json::Value(Json::arrayValue);
+    std::wstring factsPropertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Facts);
+    root[factsPropertyName] = Mso::Json::value::array();
+
+    int i = 0;
     for (const auto& fact : GetFacts())
     {
-        root[factsPropertyName].append(fact->SerializeToJsonValue());
+        root[factsPropertyName][i++] = fact->SerializeToJsonValue();
     }
 
     return root;
 }
 
-std::shared_ptr<FactSet> FactSet::Deserialize(const Json::Value& value)
+std::shared_ptr<FactSet> FactSet::Deserialize(const Mso::Json::value& value)
 {
     ParseUtil::ExpectTypeString(value, CardElementType::FactSet);
 
@@ -66,9 +68,9 @@ std::shared_ptr<FactSet> FactSet::Deserialize(const Json::Value& value)
     std::vector<std::shared_ptr<Fact>> facts;
 
     // Deserialize every fact in the array
-    for (const Json::Value& element : factsArray)
+    for (auto & element : factsArray)
     {
-        auto fact = Fact::Deserialize(element);
+        auto fact = Fact::Deserialize(element.second);
         if (fact != nullptr)
         {
             facts.push_back(fact);
@@ -79,7 +81,7 @@ std::shared_ptr<FactSet> FactSet::Deserialize(const Json::Value& value)
     return factSet;
 }
 
-std::shared_ptr<FactSet> FactSet::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<FactSet> FactSet::DeserializeFromString(const std::wstring& jsonString)
 {
     return FactSet::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }

@@ -8,7 +8,7 @@ OpenUrlAction::OpenUrlAction() : BaseActionElement(ActionType::OpenUrl)
 {
 }
 
-std::shared_ptr<OpenUrlAction> OpenUrlAction::Deserialize(const Json::Value& json)
+std::shared_ptr<OpenUrlAction> OpenUrlAction::Deserialize(const Mso::Json::value& json)
 {
     std::shared_ptr<OpenUrlAction> openUrlAction = BaseActionElement::Deserialize<OpenUrlAction>(json);
 
@@ -17,32 +17,32 @@ std::shared_ptr<OpenUrlAction> OpenUrlAction::Deserialize(const Json::Value& jso
     return openUrlAction;
 }
 
-std::shared_ptr<OpenUrlAction> OpenUrlAction::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<OpenUrlAction> OpenUrlAction::DeserializeFromString(const std::wstring& jsonString)
 {
     return OpenUrlAction::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string OpenUrlAction::Serialize()
+std::wstring OpenUrlAction::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value OpenUrlAction::SerializeToJsonValue()
+Mso::Json::value OpenUrlAction::SerializeToJsonValue()
 {
-    Json::Value root = BaseActionElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseActionElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Url)] = GetUrl();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Url)] = Mso::Json::value(GetUrl());
 
     return root;
 }
 
-std::string OpenUrlAction::GetUrl() const
+std::wstring OpenUrlAction::GetUrl() const
 {
     return m_url;
 }
 
-void OpenUrlAction::SetUrl(const std::string value)
+void OpenUrlAction::SetUrl(const std::wstring value)
 {
     m_url = value;
 }

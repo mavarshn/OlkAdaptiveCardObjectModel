@@ -1,3 +1,4 @@
 BUILD_PASS1_CONSUMES= \
+    opensource\cpprestsdk\jsondom\public|PASS0 \
     netui\test\sharedpch|PASS1 \
 

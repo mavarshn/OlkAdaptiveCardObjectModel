@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 #ifdef _WIN32
-#define strncasecmp _strnicmp
+#define strncasecmp wcsncmp
 #endif // _WIN32
 
 namespace AdaptiveCards
@@ -18,13 +18,13 @@ struct EnumHash
 };
 
 struct CaseInsensitiveEqualTo {
-    bool operator() (const std::string& lhs, const std::string& rhs) const {
+    bool operator() (const std::wstring& lhs, const std::wstring& rhs) const {
         return strncasecmp(lhs.c_str(), rhs.c_str(), CHAR_MAX) == 0;
     }
 };
 
 struct CaseInsensitiveHash {
-    size_t operator() (const std::string& keyval) const {
+    size_t operator() (const std::wstring& keyval) const {
         return std::accumulate(keyval.begin(), keyval.end(), size_t{ 0 }, [](size_t acc, char c) { return acc + static_cast<size_t>(std::tolower(c)); });
     }
 };
@@ -257,59 +257,59 @@ enum class ContainerStyle {
     Emphasis
 };
 
-const std::string AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey type);
-AdaptiveCardSchemaKey AdaptiveCardSchemaKeyFromString(const std::string& type);
+const std::wstring AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey type);
+AdaptiveCardSchemaKey AdaptiveCardSchemaKeyFromString(const std::wstring& type);
 
-const std::string CardElementTypeToString(CardElementType elementType);
-CardElementType CardElementTypeFromString(const std::string& elementType);
+const std::wstring CardElementTypeToString(CardElementType elementType);
+CardElementType CardElementTypeFromString(const std::wstring& elementType);
 
-const std::string ActionTypeToString(ActionType actionType);
-ActionType ActionTypeFromString(const std::string& actionType);
+const std::wstring ActionTypeToString(ActionType actionType);
+ActionType ActionTypeFromString(const std::wstring& actionType);
 
-const std::string HorizontalAlignmentToString(HorizontalAlignment alignment);
-HorizontalAlignment HorizontalAlignmentFromString(const std::string& alignment);
+const std::wstring HorizontalAlignmentToString(HorizontalAlignment alignment);
+HorizontalAlignment HorizontalAlignmentFromString(const std::wstring& alignment);
 
-const std::string TextColorToString(TextColor type);
-TextColor TextColorFromString(const std::string& type);
+const std::wstring TextColorToString(TextColor type);
+TextColor TextColorFromString(const std::wstring& type);
 
-const std::string TextWeightToString(TextWeight type);
-TextWeight TextWeightFromString(const std::string& type);
+const std::wstring TextWeightToString(TextWeight type);
+TextWeight TextWeightFromString(const std::wstring& type);
 
-const std::string TextSizeToString(TextSize size);
-TextSize TextSizeFromString(const std::string& size);
+const std::wstring TextSizeToString(TextSize size);
+TextSize TextSizeFromString(const std::wstring& size);
 
-const std::string ImageSizeToString(ImageSize size);
-ImageSize ImageSizeFromString(const std::string& size);
+const std::wstring ImageSizeToString(ImageSize size);
+ImageSize ImageSizeFromString(const std::wstring& size);
 
-const std::string SeparationStyleToString(SeparationStyle style);
-SeparationStyle SeparationStyleFromString(const std::string& style);
+const std::wstring SeparationStyleToString(SeparationStyle style);
+SeparationStyle SeparationStyleFromString(const std::wstring& style);
 
-const std::string ImageStyleToString(ImageStyle style);
-ImageStyle ImageStyleFromString(const std::string& style);
+const std::wstring ImageStyleToString(ImageStyle style);
+ImageStyle ImageStyleFromString(const std::wstring& style);
 
-const std::string ActionsOrientationToString(ActionsOrientation orientation);
-ActionsOrientation ActionsOrientationFromString(const std::string& orientation);
+const std::wstring ActionsOrientationToString(ActionsOrientation orientation);
+ActionsOrientation ActionsOrientationFromString(const std::wstring& orientation);
 
-const std::string ActionModeToString(ActionMode mode);
-ActionMode ActionModeFromString(const std::string& mode);
+const std::wstring ActionModeToString(ActionMode mode);
+ActionMode ActionModeFromString(const std::wstring& mode);
 
-const std::string ChoiceSetStyleToString(ChoiceSetStyle style);
-ChoiceSetStyle ChoiceSetStyleFromString(const std::string& style);
+const std::wstring ChoiceSetStyleToString(ChoiceSetStyle style);
+ChoiceSetStyle ChoiceSetStyleFromString(const std::wstring& style);
 
-const std::string TextInputStyleToString(TextInputStyle style);
-TextInputStyle TextInputStyleFromString(const std::string& style);
+const std::wstring TextInputStyleToString(TextInputStyle style);
+TextInputStyle TextInputStyleFromString(const std::wstring& style);
 
-const std::string ContainerStyleToString(ContainerStyle style);
-ContainerStyle ContainerStyleFromString(const std::string& style);
+const std::wstring ContainerStyleToString(ContainerStyle style);
+ContainerStyle ContainerStyleFromString(const std::wstring& style);
 
-const std::string ActionAlignmentToString(ActionAlignment alignment);
-ActionAlignment ActionAlignmentFromString(const std::string& alignment);
+const std::wstring ActionAlignmentToString(ActionAlignment alignment);
+ActionAlignment ActionAlignmentFromString(const std::wstring& alignment);
 
 template <typename T>
-const std::unordered_map<std::string, T, CaseInsensitiveHash, CaseInsensitiveEqualTo>
-GenerateStringToEnumMap(const std::unordered_map<T, std::string, EnumHash>& keyToStringMap)
+const std::unordered_map<std::wstring, T, CaseInsensitiveHash, CaseInsensitiveEqualTo>
+GenerateStringToEnumMap(const std::unordered_map<T, std::wstring, EnumHash>& keyToStringMap)
 {
-    std::unordered_map<std::string, T, CaseInsensitiveHash, CaseInsensitiveEqualTo> result;
+    std::unordered_map<std::wstring, T, CaseInsensitiveHash, CaseInsensitiveEqualTo> result;
     for (auto& kv : keyToStringMap)
     {
         result[kv.second] = kv.first;

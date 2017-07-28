@@ -12,11 +12,11 @@ class ChoiceSetInput : public BaseInputElement
 {
 public:
     ChoiceSetInput();
-    ChoiceSetInput(SeparationStyle separation, std::string speak);
-    ChoiceSetInput(SeparationStyle separation, std::string speak, std::vector<std::shared_ptr<ChoiceInput>>& choices);
+    ChoiceSetInput(SeparationStyle separation, std::wstring speak);
+    ChoiceSetInput(SeparationStyle separation, std::wstring speak, std::vector<std::shared_ptr<ChoiceInput>>& choices);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
     bool GetIsMultiSelect() const;
     void SetIsMultiSelect(const bool isMultiSelect);
@@ -27,8 +27,8 @@ public:
     std::vector<std::shared_ptr<ChoiceInput>>& GetChoices();
     const std::vector<std::shared_ptr<ChoiceInput>>& GetChoices() const;
 
-    static std::shared_ptr<ChoiceSetInput> Deserialize(const Json::Value& root);
-    static std::shared_ptr<ChoiceSetInput> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<ChoiceSetInput> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<ChoiceSetInput> DeserializeFromString(const std::wstring& jsonString);
 
 private:
     bool m_isMultiSelect;

@@ -8,17 +8,17 @@ SubmitAction::SubmitAction() : BaseActionElement(ActionType::Submit)
 {
 }
 
-std::string SubmitAction::GetDataJson() const
+std::wstring SubmitAction::GetDataJson() const
 {
     return m_dataJson;
 }
 
-void SubmitAction::SetDataJson(const std::string value)
+void SubmitAction::SetDataJson(const std::wstring value)
 {
     m_dataJson = value;
 }
 
-std::shared_ptr<SubmitAction> SubmitAction::Deserialize(const Json::Value& json)
+std::shared_ptr<SubmitAction> SubmitAction::Deserialize(const Mso::Json::value& json)
 {
     std::shared_ptr<SubmitAction> submitAction = BaseActionElement::Deserialize<SubmitAction>(json);
 
@@ -27,22 +27,22 @@ std::shared_ptr<SubmitAction> SubmitAction::Deserialize(const Json::Value& json)
     return submitAction;
 }
 
-std::shared_ptr<SubmitAction> SubmitAction::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<SubmitAction> SubmitAction::DeserializeFromString(const std::wstring& jsonString)
 {
     return SubmitAction::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string SubmitAction::Serialize()
+std::wstring SubmitAction::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value SubmitAction::SerializeToJsonValue()
+Mso::Json::value SubmitAction::SerializeToJsonValue()
 {
-    Json::Value root = BaseActionElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseActionElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Data)] = GetDataJson();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Data)] = Mso::Json::value(GetDataJson());
 
     return root;
 }

@@ -11,7 +11,7 @@ TextInput::TextInput() :
 {
 }
 
-std::shared_ptr<TextInput> TextInput::Deserialize(const Json::Value& json)
+std::shared_ptr<TextInput> TextInput::Deserialize(const Mso::Json::value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::TextInput);
 
@@ -26,46 +26,46 @@ std::shared_ptr<TextInput> TextInput::Deserialize(const Json::Value& json)
     return textInput;
 }
 
-std::shared_ptr<TextInput> TextInput::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<TextInput> TextInput::DeserializeFromString(const std::wstring& jsonString)
 {
     return TextInput::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string TextInput::Serialize()
+std::wstring TextInput::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value TextInput::SerializeToJsonValue()
+Mso::Json::value TextInput::SerializeToJsonValue()
 {
-    Json::Value root = BaseInputElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseInputElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsMultiline)] = GetIsMultiline();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MaxLength)] = GetMaxLength();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Placeholder)] = GetPlaceholder();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = GetValue();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)] = TextInputStyleToString(GetTextInputStyle());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsMultiline)] = Mso::Json::value(GetIsMultiline());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MaxLength)] = Mso::Json::value((int)GetMaxLength());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Placeholder)] = Mso::Json::value(GetPlaceholder());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = Mso::Json::value(GetValue());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)] = Mso::Json::value(TextInputStyleToString(GetTextInputStyle()));
 
     return root;
 }
 
-std::string TextInput::GetPlaceholder() const
+std::wstring TextInput::GetPlaceholder() const
 {
     return m_placeholder;
 }
 
-void TextInput::SetPlaceholder(const std::string value)
+void TextInput::SetPlaceholder(const std::wstring value)
 {
     m_placeholder = value;
 }
 
-std::string TextInput::GetValue() const
+std::wstring TextInput::GetValue() const
 {
     return m_value;
 }
 
-void TextInput::SetValue(const std::string value)
+void TextInput::SetValue(const std::wstring value)
 {
     m_value = value;
 }

@@ -12,16 +12,16 @@ class FactSet : public BaseCardElement
 {
 public:
     FactSet();
-    FactSet(SeparationStyle separation, std::string speak);
-    FactSet(SeparationStyle separation, std::string speak, std::vector<std::shared_ptr<Fact>>& facts);
+    FactSet(SeparationStyle separation, std::wstring speak);
+    FactSet(SeparationStyle separation, std::wstring speak, std::vector<std::shared_ptr<Fact>>& facts);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
     std::vector<std::shared_ptr<Fact>>& GetFacts();
     const std::vector<std::shared_ptr<Fact>>& GetFacts() const;
-    static std::shared_ptr<FactSet> Deserialize(const Json::Value& root);
-    static std::shared_ptr<FactSet> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<FactSet> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<FactSet> DeserializeFromString(const std::wstring& jsonString);
 
 private:
     std::vector<std::shared_ptr<Fact>> m_facts; 

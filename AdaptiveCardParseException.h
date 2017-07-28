@@ -8,13 +8,13 @@ namespace AdaptiveCards
 class AdaptiveCardParseException : public std::exception
 {
 public:
-    AdaptiveCardParseException(const std::string& message);
+    AdaptiveCardParseException(const std::wstring& message);
     ~AdaptiveCardParseException();
 
     virtual const char* what() const throw();
 
 private:
-    const std::string m_message;
+    const std::wstring m_message;
 };
 
 }

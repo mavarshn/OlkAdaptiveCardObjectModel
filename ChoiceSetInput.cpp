@@ -11,7 +11,7 @@ ChoiceSetInput::ChoiceSetInput() : BaseInputElement(CardElementType::ChoiceSetIn
 
 ChoiceSetInput::ChoiceSetInput(
     SeparationStyle separation,
-    std::string speak,
+    std::wstring speak,
     std::vector<std::shared_ptr<ChoiceInput>>& choices) :
     BaseInputElement(CardElementType::ChoiceSetInput, separation, speak),
     m_choices(choices)
@@ -20,7 +20,7 @@ ChoiceSetInput::ChoiceSetInput(
 
 ChoiceSetInput::ChoiceSetInput(
     SeparationStyle separation,
-    std::string speak) :
+    std::wstring speak) :
     BaseInputElement(CardElementType::ChoiceSetInput, separation, speak)
 {
 }
@@ -35,25 +35,28 @@ std::vector<std::shared_ptr<ChoiceInput>>& ChoiceSetInput::GetChoices()
     return m_choices;
 }
 
-std::string ChoiceSetInput::Serialize()
+std::wstring ChoiceSetInput::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value ChoiceSetInput::SerializeToJsonValue()
+Mso::Json::value ChoiceSetInput::SerializeToJsonValue()
 {
-    Json::Value root = BaseInputElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseInputElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)] = ChoiceSetStyleToString(GetChoiceSetStyle());
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsMultiSelect)] = GetIsMultiSelect();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)] = Mso::Json::value(ChoiceSetStyleToString(GetChoiceSetStyle()));
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsMultiSelect)] = Mso::Json::value(GetIsMultiSelect());
 
-    std::string propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Choices);
-    root[propertyName] = Json::Value(Json::arrayValue);
+    std::wstring propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Choices);
+    
+    Mso::Json::value::element_vector e;
+    int i = 0;
     for (const auto& choice : GetChoices())
     {
-        root[propertyName].append(choice->SerializeToJsonValue());
+        e.push_back(std::make_pair(Mso::Json::value(i++), choice->SerializeToJsonValue()));
     }
+
+    root[propertyName] = Mso::Json::value::array(e);
 
     return root;
 }
@@ -78,7 +81,7 @@ void AdaptiveCards::ChoiceSetInput::SetChoiceSetStyle(const ChoiceSetStyle choic
     m_choiceSetStyle = choiceSetStyle;
 }
 
-std::shared_ptr<ChoiceSetInput> ChoiceSetInput::Deserialize(const Json::Value& json)
+std::shared_ptr<ChoiceSetInput> ChoiceSetInput::Deserialize(const Mso::Json::value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::ChoiceSetInput);
 
@@ -92,9 +95,9 @@ std::shared_ptr<ChoiceSetInput> ChoiceSetInput::Deserialize(const Json::Value& j
     std::vector<std::shared_ptr<ChoiceInput>> choices;
 
     // Deserialize every choice in the array
-    for (const Json::Value& element : choicesArray)
+    for (auto & element : choicesArray)
     {
-        auto choice = ChoiceInput::Deserialize(element);
+        auto choice = ChoiceInput::Deserialize(element.second);
         if (choice != nullptr)
         {
             choices.push_back(choice);
@@ -105,7 +108,7 @@ std::shared_ptr<ChoiceSetInput> ChoiceSetInput::Deserialize(const Json::Value& j
     return choiceSet;
 }
 
-std::shared_ptr<ChoiceSetInput> ChoiceSetInput::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<ChoiceSetInput> ChoiceSetInput::DeserializeFromString(const std::wstring& jsonString)
 {
     return ChoiceSetInput::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }

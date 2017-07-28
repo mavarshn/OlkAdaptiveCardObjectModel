@@ -8,68 +8,67 @@ Fact::Fact()
 {
 }
 
-Fact::Fact(std::string title, std::string value, std::string speak) : 
+Fact::Fact(std::wstring title, std::wstring value, std::wstring speak) : 
     m_title(title), m_value(value), m_speak(speak)
 {
 }
 
-std::shared_ptr<Fact> Fact::Deserialize(const Json::Value& json)
+std::shared_ptr<Fact> Fact::Deserialize(const Mso::Json::value& json)
 {
-    std::string title = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title, true);
-    std::string value = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Value, true);
-    std::string speak = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Speak);
+    std::wstring title = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title, true);
+    std::wstring value = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Value, true);
+    std::wstring speak = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Speak);
 
     auto fact = std::make_shared<Fact>(title, value, speak);
     return fact;
 }
 
-std::shared_ptr<Fact> Fact::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<Fact> Fact::DeserializeFromString(const std::wstring& jsonString)
 {
     return Fact::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string Fact::Serialize()
+std::wstring Fact::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value Fact::SerializeToJsonValue()
+Mso::Json::value Fact::SerializeToJsonValue()
 {
-    Json::Value root;
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title)] = GetTitle();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Speak)] = GetSpeak();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = GetValue();
+    Mso::Json::value root;
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title)] = Mso::Json::value(GetTitle());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Speak)] = Mso::Json::value(GetSpeak());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = Mso::Json::value(GetValue());
 
     return root;
 }
 
-std::string Fact::GetTitle() const
+std::wstring Fact::GetTitle() const
 {
     return m_title;
 }
 
-void Fact::SetTitle(const std::string value)
+void Fact::SetTitle(const std::wstring value)
 {
     m_title = value;
 }
 
-std::string Fact::GetValue() const
+std::wstring Fact::GetValue() const
 {
     return m_value;
 }
 
-void Fact::SetValue(const std::string value)
+void Fact::SetValue(const std::wstring value)
 {
     m_value = value;
 }
 
-std::string Fact::GetSpeak() const
+std::wstring Fact::GetSpeak() const
 {
     return m_speak;
 }
 
-void Fact::SetSpeak(const std::string value)
+void Fact::SetSpeak(const std::wstring value)
 {
     m_speak = value;
 }

@@ -9,17 +9,17 @@ BaseInputElement::BaseInputElement(CardElementType elementType) :
 {
 }
 
-BaseInputElement::BaseInputElement(CardElementType elementType, SeparationStyle separationStyle, std::string speak) :
+BaseInputElement::BaseInputElement(CardElementType elementType, SeparationStyle separationStyle, std::wstring speak) :
     BaseCardElement(elementType, separationStyle, speak)
 {
 }
 
-std::string BaseInputElement::GetId() const
+std::wstring BaseInputElement::GetId() const
 {
     return m_id;
 }
 
-void BaseInputElement::SetId(const std::string value)
+void BaseInputElement::SetId(const std::wstring value)
 {
     m_id = value;
 }
@@ -34,12 +34,12 @@ void BaseInputElement::SetIsRequired(const bool value)
     m_isRequired = value;
 }
 
-Json::Value BaseInputElement::SerializeToJsonValue()
+Mso::Json::value BaseInputElement::SerializeToJsonValue()
 {
-    Json::Value root = BaseCardElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseCardElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Id)] = GetId();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsRequired)] = GetIsRequired();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Id)] = Mso::Json::value(GetId());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsRequired)] = Mso::Json::value(GetIsRequired());
 
     return root;
 }

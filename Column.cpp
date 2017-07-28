@@ -16,7 +16,7 @@
 
 using namespace AdaptiveCards;
 
-const std::unordered_map<CardElementType, std::function<std::shared_ptr<BaseCardElement>(const Json::Value&)>, EnumHash> Column::CardElementParsers =
+const std::unordered_map<CardElementType, std::function<std::shared_ptr<BaseCardElement>(const Mso::Json::value&)>, EnumHash> Column::CardElementParsers =
 {
     { CardElementType::Container, Container::Deserialize },
     { CardElementType::ColumnSet, ColumnSet::Deserialize },
@@ -32,14 +32,14 @@ const std::unordered_map<CardElementType, std::function<std::shared_ptr<BaseCard
     { CardElementType::ToggleInput, ToggleInput::Deserialize },
 };
 
-Column::Column() : BaseCardElement(CardElementType::Column), m_size("Auto")
+Column::Column() : BaseCardElement(CardElementType::Column), m_size(L"Auto")
 {
 }
 
 Column::Column(
     SeparationStyle separation,
-    std::string speak,
-    std::string size,
+    std::wstring speak,
+    std::wstring size,
     std::vector<std::shared_ptr<BaseCardElement>>& items) :
     BaseCardElement(CardElementType::Column, separation, speak), m_size(size), m_items(items)
 {
@@ -47,18 +47,18 @@ Column::Column(
 
 Column::Column(
     SeparationStyle separation,
-    std::string speak,
-    std::string size) :
+    std::wstring speak,
+    std::wstring size) :
     BaseCardElement(CardElementType::Column, separation, speak), m_size(size)
 {
 }
 
-std::string Column::GetSize() const
+std::wstring Column::GetSize() const
 {
     return m_size;
 }
 
-void Column::SetSize(const std::string value)
+void Column::SetSize(const std::wstring value)
 {
     m_size = value;
 }
@@ -73,31 +73,32 @@ std::vector<std::shared_ptr<BaseCardElement>>& Column::GetItems()
     return m_items;
 }
 
-std::string Column::Serialize()
+std::wstring Column::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value Column::SerializeToJsonValue()
+Mso::Json::value Column::SerializeToJsonValue()
 {
-    Json::Value root = BaseCardElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseCardElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size)] = GetSize();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size)] = Mso::Json::value(GetSize());
 
-    std::string propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Items);
-    root[propertyName] = Json::Value(Json::arrayValue);
+    std::wstring propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Items);
+    root[propertyName] = Mso::Json::value::array();
+    int i = 0;
     for (const auto& cardElement : GetItems())
     {
-        root[propertyName].append(cardElement->SerializeToJsonValue());
+        root[propertyName][i++] = cardElement->SerializeToJsonValue();
     }
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)] = BaseCardElement::SerializeSelectAction(GetSelectAction());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)] = Mso::Json::value(BaseCardElement::SerializeSelectAction(GetSelectAction()));
 
     return root;
 }
 
-std::shared_ptr<Column> Column::Deserialize(const Json::Value& value)
+std::shared_ptr<Column> Column::Deserialize(const Mso::Json::value& value)
 {
     ParseUtil::ExpectTypeString(value, CardElementType::Column);
 
@@ -114,7 +115,7 @@ std::shared_ptr<Column> Column::Deserialize(const Json::Value& value)
     return column;
 }
 
-std::shared_ptr<Column> Column::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<Column> Column::DeserializeFromString(const std::wstring& jsonString)
 {
     return Column::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }

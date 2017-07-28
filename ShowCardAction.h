@@ -12,11 +12,11 @@ class ShowCardAction : public BaseActionElement
 public:
     ShowCardAction();
 
-    static std::shared_ptr<ShowCardAction> Deserialize(const Json::Value& root);
-    static std::shared_ptr<ShowCardAction> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<ShowCardAction> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<ShowCardAction> DeserializeFromString(const std::wstring& jsonString);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
     std::shared_ptr<AdaptiveCard> GetCard() const;
     void SetCard(const std::shared_ptr<AdaptiveCard>);

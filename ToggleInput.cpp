@@ -6,12 +6,12 @@ using namespace AdaptiveCards;
 
 ToggleInput::ToggleInput() :
     BaseInputElement(CardElementType::ToggleInput),
-    m_valueOn("true"),
-    m_valueOff("false")
+    m_valueOn(L"true"),
+    m_valueOff(L"false")
 {
 }
 
-std::shared_ptr<ToggleInput> ToggleInput::Deserialize(const Json::Value& json)
+std::shared_ptr<ToggleInput> ToggleInput::Deserialize(const Mso::Json::value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::ToggleInput);
 
@@ -20,14 +20,14 @@ std::shared_ptr<ToggleInput> ToggleInput::Deserialize(const Json::Value& json)
     toggleInput->SetTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title, true));
     toggleInput->SetValue(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Value));
 
-    std::string valueOff = ParseUtil::GetString(json, AdaptiveCardSchemaKey::ValueOff);
-    if (valueOff != "")
+    std::wstring valueOff = ParseUtil::GetString(json, AdaptiveCardSchemaKey::ValueOff);
+    if (valueOff != L"")
     {
         toggleInput->SetValueOff(valueOff);
     }
 
-    std::string valueOn = ParseUtil::GetString(json, AdaptiveCardSchemaKey::ValueOn);
-    if (valueOn != "")
+    std::wstring valueOn = ParseUtil::GetString(json, AdaptiveCardSchemaKey::ValueOn);
+    if (valueOn != L"")
     {
         toggleInput->SetValueOn(valueOn);
     }
@@ -35,64 +35,64 @@ std::shared_ptr<ToggleInput> ToggleInput::Deserialize(const Json::Value& json)
     return toggleInput;
 }
 
-std::shared_ptr<ToggleInput> ToggleInput::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<ToggleInput> ToggleInput::DeserializeFromString(const std::wstring& jsonString)
 {
     return ToggleInput::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string ToggleInput::Serialize()
+std::wstring ToggleInput::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value ToggleInput::SerializeToJsonValue()
+Mso::Json::value ToggleInput::SerializeToJsonValue()
 {
-    Json::Value root = BaseInputElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseInputElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title)] = GetTitle();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = GetValue();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ValueOff)] = GetValueOff();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ValueOn)] = GetValueOn();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title)] = Mso::Json::value(GetTitle());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = Mso::Json::value(GetValue());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ValueOff)] = Mso::Json::value(GetValueOff());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ValueOn)] = Mso::Json::value(GetValueOn());
 
     return root;
 }
 
-std::string ToggleInput::GetTitle() const
+std::wstring ToggleInput::GetTitle() const
 {
     return m_title;
 }
 
-void ToggleInput::SetTitle(const std::string value)
+void ToggleInput::SetTitle(const std::wstring value)
 {
     m_title = value;
 }
 
-std::string ToggleInput::GetValue() const
+std::wstring ToggleInput::GetValue() const
 {
     return m_value;
 }
 
-void ToggleInput::SetValue(const std::string value)
+void ToggleInput::SetValue(const std::wstring value)
 {
     m_value = value;
 }
-void ToggleInput::SetValueOff(const std::string valueOff)
+void ToggleInput::SetValueOff(const std::wstring valueOff)
 {
     m_valueOff = valueOff;
 }
 
-std::string ToggleInput::GetValueOff() const
+std::wstring ToggleInput::GetValueOff() const
 {
     return m_valueOff;
 }
 
-std::string ToggleInput::GetValueOn() const
+std::wstring ToggleInput::GetValueOn() const
 {
     return m_valueOn;
 }
 
-void ToggleInput::SetValueOn(const std::string valueOn)
+void ToggleInput::SetValueOn(const std::wstring valueOn)
 {
     m_valueOn = valueOn;
 }

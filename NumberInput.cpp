@@ -11,7 +11,7 @@ AdaptiveCards::NumberInput::NumberInput() :
 {
 }
 
-std::shared_ptr<NumberInput> NumberInput::Deserialize(const Json::Value& json)
+std::shared_ptr<NumberInput> NumberInput::Deserialize(const Mso::Json::value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::NumberInput);
 
@@ -25,35 +25,35 @@ std::shared_ptr<NumberInput> NumberInput::Deserialize(const Json::Value& json)
     return numberInput;
 }
 
-std::shared_ptr<NumberInput> NumberInput::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<NumberInput> NumberInput::DeserializeFromString(const std::wstring& jsonString)
 {
     return NumberInput::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string NumberInput::Serialize()
+std::wstring NumberInput::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value NumberInput::SerializeToJsonValue()
+Mso::Json::value NumberInput::SerializeToJsonValue()
 {
-    Json::Value root = BaseInputElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseInputElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = GetMax();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Min)] = GetMin();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Placeholder)] = GetPlaceholder();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = GetValue();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = Mso::Json::value(GetMax());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Min)] = Mso::Json::value(GetMin());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Placeholder)] = Mso::Json::value(GetPlaceholder());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = Mso::Json::value(GetValue());
 
     return root;
 }
 
-std::string NumberInput::GetPlaceholder() const
+std::wstring NumberInput::GetPlaceholder() const
 {
     return m_placeholder;
 }
 
-void NumberInput::SetPlaceholder(const std::string value)
+void NumberInput::SetPlaceholder(const std::wstring value)
 {
     m_placeholder = value;
 }

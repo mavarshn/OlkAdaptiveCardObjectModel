@@ -11,8 +11,8 @@ class TextBlock : public BaseCardElement
 public:
     TextBlock();
     TextBlock(SeparationStyle separationStyle,
-        std::string speak,
-        std::string text,
+        std::wstring speak,
+        std::wstring text,
         TextSize textSize,
         TextWeight textWeight,
         TextColor textColor,
@@ -21,14 +21,14 @@ public:
         int maxLines,
         HorizontalAlignment hAlignment);
 
-    static std::shared_ptr<TextBlock> Deserialize(const Json::Value& root);
-    static std::shared_ptr<TextBlock> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<TextBlock> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<TextBlock> DeserializeFromString(const std::wstring& jsonString);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
-    std::string GetText() const;
-    void SetText(const std::string value);
+    std::wstring GetText() const;
+    void SetText(const std::wstring value);
 
     TextSize GetTextSize() const;
     void SetTextSize(const TextSize value);
@@ -52,7 +52,7 @@ public:
     void SetHorizontalAlignment(const HorizontalAlignment value);
 
 private:
-    std::string m_text;
+    std::wstring m_text;
     TextSize m_textSize;
     TextWeight m_textWeight;
     TextColor m_textColor;

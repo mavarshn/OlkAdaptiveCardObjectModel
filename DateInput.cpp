@@ -9,7 +9,7 @@ DateInput::DateInput() :
 {
 }
 
-std::shared_ptr<DateInput> DateInput::Deserialize(const Json::Value& json)
+std::shared_ptr<DateInput> DateInput::Deserialize(const Mso::Json::value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::DateInput);
 
@@ -23,65 +23,64 @@ std::shared_ptr<DateInput> DateInput::Deserialize(const Json::Value& json)
     return dateInput;
 }
 
-std::shared_ptr<DateInput> DateInput::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<DateInput> DateInput::DeserializeFromString(const std::wstring& jsonString)
 {
     return DateInput::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string DateInput::Serialize()
+std::wstring DateInput::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value DateInput::SerializeToJsonValue()
+Mso::Json::value DateInput::SerializeToJsonValue()
 {
-    Json::Value root = BaseInputElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseInputElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = GetMax();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Min)] = GetMin();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Placeholder)] = GetPlaceholder();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = GetValue();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = Mso::Json::value(GetMax());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Min)] = Mso::Json::value(GetMin());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Placeholder)] = Mso::Json::value(GetPlaceholder());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = Mso::Json::value(GetValue());
 
     return root;
 }
 
-std::string DateInput::GetMax() const
+std::wstring DateInput::GetMax() const
 {
     return m_max;
 }
 
-void DateInput::SetMax(const std::string value)
+void DateInput::SetMax(const std::wstring value)
 {
     m_max = value;
 }
 
-std::string DateInput::GetMin() const
+std::wstring DateInput::GetMin() const
 {
     return m_min;
 }
 
-void DateInput::SetMin(const std::string value)
+void DateInput::SetMin(const std::wstring value)
 {
     m_min = value;
 }
 
-std::string DateInput::GetPlaceholder() const
+std::wstring DateInput::GetPlaceholder() const
 {
     return m_placeholder;
 }
 
-void DateInput::SetPlaceholder(const std::string value)
+void DateInput::SetPlaceholder(const std::wstring value)
 {
     m_placeholder = value;
 }
 
-std::string DateInput::GetValue() const
+std::wstring DateInput::GetValue() const
 {
     return m_value;
 }
 
-void DateInput::SetValue(const std::string value)
+void DateInput::SetValue(const std::wstring value)
 {
     m_value = value;
 }

@@ -12,21 +12,21 @@ class Image : public BaseCardElement
 public:
     Image();
     Image(SeparationStyle separationStyle,
-        std::string speak,
-        std::string uri,
+        std::wstring speak,
+        std::wstring uri,
         ImageStyle imageStyle,
         ImageSize imageSize,
-        std::string altText,
+        std::wstring altText,
         HorizontalAlignment hAlignment);
 
-    static std::shared_ptr<Image> Deserialize(const Json::Value& root);
-    static std::shared_ptr<Image> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<Image> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<Image> DeserializeFromString(const std::wstring& jsonString);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
-    std::string GetUrl() const;
-    void SetUrl(const std::string value);
+    std::wstring GetUrl() const;
+    void SetUrl(const std::wstring value);
 
     ImageStyle GetImageStyle() const;
     void SetImageStyle(const ImageStyle value);
@@ -34,8 +34,8 @@ public:
     ImageSize GetImageSize() const;
     void SetImageSize(const ImageSize value);
 
-    std::string GetAltText() const;
-    void SetAltText(const std::string value);
+    std::wstring GetAltText() const;
+    void SetAltText(const std::wstring value);
 
     HorizontalAlignment GetHorizontalAlignment() const;
     void SetHorizontalAlignment(const HorizontalAlignment value);
@@ -44,10 +44,10 @@ public:
     void SetSelectAction(const std::shared_ptr<BaseActionElement> action);
 
 private:
-    std::string m_url;
+    std::wstring m_url;
     ImageStyle m_imageStyle;
     ImageSize m_imageSize;
-    std::string m_altText;
+    std::wstring m_altText;
     HorizontalAlignment m_hAlignment;
     std::shared_ptr<BaseActionElement> m_selectAction;
 };

@@ -9,7 +9,7 @@ TimeInput::TimeInput() :
 {
 }
 
-std::shared_ptr<TimeInput> TimeInput::Deserialize(const Json::Value& json)
+std::shared_ptr<TimeInput> TimeInput::Deserialize(const Mso::Json::value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::TimeInput);
 
@@ -23,65 +23,65 @@ std::shared_ptr<TimeInput> TimeInput::Deserialize(const Json::Value& json)
     return timeInput;
 }
 
-std::shared_ptr<TimeInput> TimeInput::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<TimeInput> TimeInput::DeserializeFromString(const std::wstring& jsonString)
 {
     return TimeInput::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string TimeInput::Serialize()
+std::wstring TimeInput::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value TimeInput::SerializeToJsonValue()
+Mso::Json::value TimeInput::SerializeToJsonValue()
 {
-    Json::Value root = BaseInputElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseInputElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = GetMax();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Min)] = GetMin();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Placeholder)] = GetPlaceholder();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = GetValue();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = Mso::Json::value(GetMax());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Min)] = Mso::Json::value(GetMin());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Placeholder)] = Mso::Json::value(GetPlaceholder());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = Mso::Json::value(GetValue());
 
     return root;
 }
 
-std::string TimeInput::GetMax() const
+std::wstring TimeInput::GetMax() const
 {
     return m_max;
 }
 
-void TimeInput::SetMax(const std::string value)
+void TimeInput::SetMax(const std::wstring value)
 {
     m_max = value;
 }
 
-std::string TimeInput::GetMin() const
+std::wstring TimeInput::GetMin() const
 {
     return m_min;
 }
 
-void TimeInput::SetMin(const std::string value)
+void TimeInput::SetMin(const std::wstring value)
 {
     m_min = value;
 }
 
-std::string TimeInput::GetPlaceholder() const
+std::wstring TimeInput::GetPlaceholder() const
 {
     return m_placeholder;
 }
 
-void TimeInput::SetPlaceholder(const std::string value)
+void TimeInput::SetPlaceholder(const std::wstring value)
 {
     m_placeholder = value;
 }
 
-std::string TimeInput::GetValue() const
+std::wstring TimeInput::GetValue() const
 {
     return m_value;
 }
 
-void TimeInput::SetValue(const std::string value)
+void TimeInput::SetValue(const std::wstring value)
 {
     m_value = value;
 }

@@ -15,7 +15,7 @@
 
 using namespace AdaptiveCards;
 
-const std::unordered_map<CardElementType, std::function<std::shared_ptr<BaseCardElement>(const Json::Value&)>, EnumHash> Container::CardElementParsers =
+const std::unordered_map<CardElementType, std::function<std::shared_ptr<BaseCardElement>(const Mso::Json::value&)>, EnumHash> Container::CardElementParsers =
 {
     { CardElementType::ChoiceSetInput, ChoiceSetInput::Deserialize },
     { CardElementType::Container, Container::Deserialize },
@@ -37,7 +37,7 @@ Container::Container() : BaseCardElement(CardElementType::Container), m_style(Co
 
 Container::Container(
     SeparationStyle separation,
-    std::string speak,
+    std::wstring speak,
     ContainerStyle style,
     std::vector<std::shared_ptr<BaseCardElement>>& items) :
     BaseCardElement(CardElementType::Container, separation, speak),
@@ -48,7 +48,7 @@ Container::Container(
 
 Container::Container(
     SeparationStyle separation,
-    std::string speak,
+    std::wstring speak,
     ContainerStyle style) :
     BaseCardElement(CardElementType::Container, separation, speak),
     m_style(style)
@@ -85,31 +85,32 @@ void Container::SetSelectAction(const std::shared_ptr<BaseActionElement> action)
     m_selectAction = action;
 }
 
-std::string Container::Serialize()
+std::wstring Container::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value Container::SerializeToJsonValue()
+Mso::Json::value Container::SerializeToJsonValue()
 {
-    Json::Value root = BaseCardElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseCardElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)] = ContainerStyleToString(GetContainerStyle());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)] = Mso::Json::value(ContainerStyleToString(GetContainerStyle()));
 
-    std::string itemsPropertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Items);
-    root[itemsPropertyName] = Json::Value(Json::arrayValue);
-    for (const auto& cardElement : GetItems())
+    std::wstring itemsPropertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Items);
+    root[itemsPropertyName] = Mso::Json::value::array();
+    int i = 0;
+    for (auto & cardElement : GetItems())
     {
-        root[itemsPropertyName].append(cardElement->SerializeToJsonValue());
+        root[itemsPropertyName][i++] = cardElement->SerializeToJsonValue();
     }
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)] = BaseCardElement::SerializeSelectAction(GetSelectAction());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)] = Mso::Json::value(BaseCardElement::SerializeSelectAction(GetSelectAction()));
 
     return root;
 }
 
-std::shared_ptr<Container> Container::Deserialize(const Json::Value& value)
+std::shared_ptr<Container> Container::Deserialize(const Mso::Json::value& value)
 {
     ParseUtil::ExpectTypeString(value, CardElementType::Container);
 
@@ -127,7 +128,7 @@ std::shared_ptr<Container> Container::Deserialize(const Json::Value& value)
     return container;
 }
 
-std::shared_ptr<Container> Container::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<Container> Container::DeserializeFromString(const std::wstring& jsonString)
 {
     return Container::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }

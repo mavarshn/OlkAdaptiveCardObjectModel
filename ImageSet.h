@@ -12,19 +12,19 @@ class BaseCardElement;
     {
         public:
         ImageSet();
-        ImageSet(SeparationStyle separation, std::string speak);
-        ImageSet(SeparationStyle separation, std::string speak, std::vector<std::shared_ptr<Image>>& images);
+        ImageSet(SeparationStyle separation, std::wstring speak);
+        ImageSet(SeparationStyle separation, std::wstring speak, std::vector<std::shared_ptr<Image>>& images);
 
-        virtual std::string Serialize();
-        virtual Json::Value SerializeToJsonValue();
+        virtual std::wstring Serialize();
+        virtual Mso::Json::value SerializeToJsonValue();
 
         ImageSize GetImageSize() const;
         void SetImageSize(const ImageSize value);
 
         std::vector<std::shared_ptr<Image>>& GetImages();
         const std::vector<std::shared_ptr<Image>>& GetImages() const;
-        static std::shared_ptr<ImageSet> Deserialize(const Json::Value& root);
-        static std::shared_ptr<ImageSet> DeserializeFromString(const std::string& jsonString);
+        static std::shared_ptr<ImageSet> Deserialize(const Mso::Json::value& root);
+        static std::shared_ptr<ImageSet> DeserializeFromString(const std::wstring& jsonString);
 
         private:
         std::vector<std::shared_ptr<Image>> m_images;

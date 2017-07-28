@@ -11,16 +11,16 @@ class OpenUrlAction : public BaseActionElement
 public:
     OpenUrlAction();
 
-    static std::shared_ptr<OpenUrlAction> Deserialize(const Json::Value& root);
-    static std::shared_ptr<OpenUrlAction> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<OpenUrlAction> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<OpenUrlAction> DeserializeFromString(const std::wstring& jsonString);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
-    std::string GetUrl() const;
-    void SetUrl(const std::string value);
+    std::wstring GetUrl() const;
+    void SetUrl(const std::wstring value);
     
 private:
-    std::string m_url;
+    std::wstring m_url;
 };
 }

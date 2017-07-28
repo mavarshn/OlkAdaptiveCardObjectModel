@@ -11,16 +11,16 @@ class SubmitAction : public BaseActionElement
 public:
     SubmitAction();
 
-    std::string GetDataJson() const;
-    void SetDataJson(const std::string value);
+    std::wstring GetDataJson() const;
+    void SetDataJson(const std::wstring value);
 
-    static std::shared_ptr<SubmitAction> Deserialize(const Json::Value& root);
-    static std::shared_ptr<SubmitAction> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<SubmitAction> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<SubmitAction> DeserializeFromString(const std::wstring& jsonString);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
 private:
-    std::string m_dataJson;
+    std::wstring m_dataJson;
 };
 }

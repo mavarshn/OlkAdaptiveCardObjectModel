@@ -2,7 +2,8 @@
 
 #include "stdafx.h"
 #include "Enums.h"
-#include "json/json.h"
+#include <jsondom/ijsondom.h>
+#include <jsondom/JsonCommon.h>
 
 namespace AdaptiveCards
 {
@@ -11,28 +12,28 @@ class ChoiceInput
 public:
     ChoiceInput();
 
-    std::string Serialize();
-    Json::Value SerializeToJsonValue();
+    std::wstring Serialize();
+    Mso::Json::value SerializeToJsonValue();
 
-    std::string GetTitle() const;
-    void SetTitle(const std::string value);
+    std::wstring GetTitle() const;
+    void SetTitle(const std::wstring value);
 
-    std::string GetValue() const;
-    void SetValue(const std::string value);
+    std::wstring GetValue() const;
+    void SetValue(const std::wstring value);
 
     bool GetIsSelected() const;
     void SetIsSelected(const bool value);
 
-    std::string GetSpeak() const;
-    void SetSpeak(const std::string value);
+    std::wstring GetSpeak() const;
+    void SetSpeak(const std::wstring value);
 
-    static std::shared_ptr<ChoiceInput> Deserialize(const Json::Value& root);
-    static std::shared_ptr<ChoiceInput> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<ChoiceInput> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<ChoiceInput> DeserializeFromString(const std::wstring& jsonString);
 
 private:
-    std::string m_title;
-    std::string m_value;
-    std::string m_speak;
+    std::wstring m_title;
+    std::wstring m_value;
+    std::wstring m_speak;
     bool m_isSelected;
 };
 }

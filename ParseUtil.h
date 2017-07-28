@@ -3,7 +3,8 @@
 #include "stdafx.h"
 #include "AdaptiveCardParseException.h"
 #include "Enums.h"
-#include "json/json.h"
+#include <jsondom/ijsondom.h>
+#include <jsondom/JsonCommon.h>
 
 namespace AdaptiveCards
 {
@@ -13,79 +14,87 @@ class ParseUtil
 
 public:
 
-    static void ThrowIfNotJsonObject(const Json::Value& json);
+    static void ThrowIfNotJsonObject(const Mso::Json::value& json);
 
-    static void ExpectString(const Json::Value& json);
+    static void ExpectString(const Mso::Json::value& json);
 
-    static std::string GetTypeAsString(const Json::Value& json);
+    static std::wstring GetTypeAsString(const Mso::Json::value& json);
 
-    static std::string TryGetTypeAsString(const Json::Value& json);
+    static std::wstring TryGetTypeAsString(const Mso::Json::value& json);
 
-    static std::string GetString(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
+    static std::wstring GetString(const Mso::Json::value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
 
     // Gets the specified property and returns a JSON string of the value
-    static std::string GetJsonString(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
+    static std::wstring GetJsonString(const Mso::Json::value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
 
-    static std::string GetValueAsString(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
+    static std::wstring GetValueAsString(const Mso::Json::value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
 
-    static bool GetBool(const Json::Value& json, AdaptiveCardSchemaKey key, bool defaultValue, bool isRequired = false);
+    static bool GetBool(const Mso::Json::value& json, AdaptiveCardSchemaKey key, bool defaultValue, bool isRequired = false);
 
-    static unsigned int GetUInt(const Json::Value& json, AdaptiveCardSchemaKey key, unsigned int defaultValue, bool isRequired = false);
+    static unsigned int GetUInt(const Mso::Json::value& json, AdaptiveCardSchemaKey key, unsigned int defaultValue, bool isRequired = false);
 
-    static int GetInt(const Json::Value& json, AdaptiveCardSchemaKey key, int defaultValue, bool isRequired = false);
+    static int GetInt(const Mso::Json::value& json, AdaptiveCardSchemaKey key, int defaultValue, bool isRequired = false);
 
-    static CardElementType GetCardElementType(const Json::Value& json);
+    static CardElementType GetCardElementType(const Mso::Json::value& json);
 
-    static CardElementType TryGetCardElementType(const Json::Value& json);
+    static CardElementType TryGetCardElementType(const Mso::Json::value& json);
 
-    static ActionType GetActionType(const Json::Value& json);
+    static ActionType GetActionType(const Mso::Json::value& json);
 
-    static ActionType TryGetActionType(const Json::Value& json);
+    static ActionType TryGetActionType(const Mso::Json::value& json);
 
-    static Json::Value GetArray(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
+    static Mso::Json::value GetArray(const Mso::Json::value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
 
-    static Json::Value GetJsonValueFromString(const std::string jsonString);
+    static Mso::Json::value GetJsonValueFromString(const std::wstring jsonString);
 
-    static Json::Value ExtractJsonValue(const Json::Value& jsonRoot, AdaptiveCardSchemaKey key, bool isRequired = false);
+    static Mso::Json::value ExtractJsonValue(const Mso::Json::value& jsonRoot, AdaptiveCardSchemaKey key, bool isRequired = false);
+
+    static Mso::Json::value GetValue(Mso::Json::value const &parent, const std::wstring &name);
+
+    static std::wstring GetString(Mso::Json::value const &parent, const std::wstring &name, const wchar_t *defaultString = nullptr);
+
+    static int32_t GetInteger(Mso::Json::value const &parent, const std::wstring &name);
+
+    static bool GetBoolean(Mso::Json::value const &parent, const std::wstring &name, bool fDefault = false);
 
     template <typename T>
     static T GetEnumValue(
-        const Json::Value& json,
+        const Mso::Json::value& json,
         AdaptiveCardSchemaKey key,
         T defaultEnumValue,
-        std::function<T(const std::string& name)> enumConverter,
+        std::function<T(const std::wstring& name)> enumConverter,
         bool isRequired = false);
 
     template <typename T>
     static std::vector<std::shared_ptr<T>> GetElementCollection(
-        const Json::Value& json,
+        const Mso::Json::value& json,
         AdaptiveCardSchemaKey key,
-        const std::unordered_map<CardElementType, std::function<std::shared_ptr<T>(const Json::Value&)>, EnumHash>& parsers,
+        const std::unordered_map<CardElementType, std::function<std::shared_ptr<T>(const Mso::Json::value&)>, EnumHash>& parsers,
         bool isRequired = false);
 
     template <typename T>
     static std::vector<std::shared_ptr<T>> GetActionCollection(
-        const Json::Value& json,
+        const Mso::Json::value& json,
         AdaptiveCardSchemaKey key,
-        const std::unordered_map<ActionType, std::function<std::shared_ptr<T>(const Json::Value&)>, EnumHash>& parsers,
+        const std::unordered_map<ActionType, std::function<std::shared_ptr<T>(const Mso::Json::value&)>, EnumHash>& parsers,
         bool isRequired = false);
 
     template <typename T>
     static T ExtractJsonValueAndMergeWithDefault(
-        const Json::Value& rootJson,
+        const Mso::Json::value& rootJson,
         AdaptiveCardSchemaKey key,
         const T &defaultValue,
-        const std::function<T(const Json::Value&, const T&)>& deserializer);
+        const std::function<T(const Mso::Json::value&, const T&)>& deserializer);
 
     template <typename T>
     static std::shared_ptr<T> GetActionFromJsonValue(
-        const Json::Value& json,
-        const std::unordered_map<ActionType, std::function<std::shared_ptr<T>(const Json::Value&)>, EnumHash>& parsers);
+        const Mso::Json::value& json,
+        const std::unordered_map<ActionType, std::function<std::shared_ptr<T>(const Mso::Json::value&)>, EnumHash>& parsers);
 
-    static void ExpectTypeString(const Json::Value& json, CardElementType bodyType);
+    static void ExpectTypeString(const Mso::Json::value& json, CardElementType bodyType);
 
     // throws if the key is missing or the value mapped to the key is the wrong type
-    static void ExpectKeyAndValueType(const Json::Value& json, const char* expectedKey, std::function<void(const Json::Value&)> throwIfWrongType);
+    static void ExpectKeyAndValueType(const Mso::Json::value& json, const wchar_t* expectedKey, std::function<void(const Mso::Json::value&)> throwIfWrongType);
 
 
 private:
@@ -95,18 +104,18 @@ private:
 };
 
 template <typename T>
-T ParseUtil::GetEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, T defaultEnumValue, std::function<T(const std::string& name)> enumConverter, bool isRequired)
+T ParseUtil::GetEnumValue(const Mso::Json::value& json, AdaptiveCardSchemaKey key, T defaultEnumValue, std::function<T(const std::wstring& name)> enumConverter, bool isRequired)
 {
-    std::string propertyValueStr = "";
+    std::wstring propertyValueStr = L"";
     try
     {
-        const std::string propertyName = AdaptiveCardSchemaKeyToString(key);
-        auto propertyValue = json.get(propertyName, Json::Value());
-        if (propertyValue.empty())
+        const std::wstring propertyName = AdaptiveCardSchemaKeyToString(key);
+        auto propertyValue = GetValue(json, propertyName);
+        if (propertyValue.is_null())
         {
             if (isRequired)
             {
-                throw AdaptiveCardParseException("Property is required but was found empty: " + propertyName);
+                throw AdaptiveCardParseException(L"Property is required but was found empty: " + propertyName);
             }
             else
             {
@@ -114,31 +123,31 @@ T ParseUtil::GetEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, T 
             }
         }
 
-        if (!propertyValue.isString())
+        if (!propertyValue.is_string())
         {
-            throw AdaptiveCardParseException("Enum type was invalid. Expected type string.");
+            throw AdaptiveCardParseException(L"Enum type was invalid. Expected type string.");
         }
 
-        propertyValueStr = propertyValue.asString();
+        propertyValueStr = propertyValue.as_string();
         return enumConverter(propertyValueStr);
     }
     catch (const std::out_of_range&)
     {
-        throw AdaptiveCardParseException("Enum type was out of range. Actual: " + propertyValueStr);
+        throw AdaptiveCardParseException(L"Enum type was out of range. Actual: " + propertyValueStr);
     }
 }
 
 template <typename T>
 std::vector<std::shared_ptr<T>> ParseUtil::GetElementCollection(
-    const Json::Value& json,
+    const Mso::Json::value& json,
     AdaptiveCardSchemaKey key,
-    const std::unordered_map<CardElementType, std::function<std::shared_ptr<T>(const Json::Value&)>, EnumHash>& parsers,
+    const std::unordered_map<CardElementType, std::function<std::shared_ptr<T>(const Mso::Json::value&)>, EnumHash>& parsers,
     bool isRequired)
 {
     auto elementArray = GetArray(json, key, isRequired);
 
     std::vector<std::shared_ptr<T>> elements;
-    if (elementArray.empty())
+    if (elementArray.is_null())
     {
         return elements;
     }
@@ -148,13 +157,13 @@ std::vector<std::shared_ptr<T>> ParseUtil::GetElementCollection(
     for (const auto& curJsonValue : elementArray)
     {
         // Get the element's type
-        CardElementType curElementType = ParseUtil::TryGetCardElementType(curJsonValue);
+        CardElementType curElementType = ParseUtil::TryGetCardElementType(curJsonValue.second);
 
         //Parse it if it's allowed by the current parsers
         if (parsers.find(curElementType) != parsers.end())
         {
             // Use the parser that maps to the type
-            elements.push_back(parsers.at(curElementType)(curJsonValue));
+            elements.push_back(parsers.at(curElementType)(curJsonValue.second));
         }
     }
 
@@ -163,25 +172,25 @@ std::vector<std::shared_ptr<T>> ParseUtil::GetElementCollection(
 
 template <typename T>
 std::vector<std::shared_ptr<T>> ParseUtil::GetActionCollection(
-    const Json::Value& json,
+    const Mso::Json::value& json,
     AdaptiveCardSchemaKey key,
-    const std::unordered_map<ActionType, std::function<std::shared_ptr<T>(const Json::Value&)>, EnumHash>& parsers,
+    const std::unordered_map<ActionType, std::function<std::shared_ptr<T>(const Mso::Json::value&)>, EnumHash>& parsers,
     bool isRequired)
 {
     auto elementArray = GetArray(json, key, isRequired);
 
     std::vector<std::shared_ptr<T>> elements;
 
-    if (elementArray.empty())
+    if (elementArray.is_null())
     {
         return elements;
     }
 
     elements.reserve(elementArray.size());
 
-    for (const auto& curJsonValue : elementArray)
+    for (auto & curJsonValue : elementArray)
     {
-        auto action = ParseUtil::GetActionFromJsonValue(curJsonValue, parsers);
+        auto action = ParseUtil::GetActionFromJsonValue(curJsonValue.second, parsers);
         if (action != nullptr)
         {
             elements.push_back(action);
@@ -193,24 +202,24 @@ std::vector<std::shared_ptr<T>> ParseUtil::GetActionCollection(
 
 template <typename T>
 T ParseUtil::ExtractJsonValueAndMergeWithDefault(
-    const Json::Value& rootJson,
+    const Mso::Json::value& rootJson,
     AdaptiveCardSchemaKey key,
     const T& defaultValue,
-    const std::function<T(const Json::Value&, const T&)>& deserializer)
+    const std::function<T(const Mso::Json::value&, const T&)>& deserializer)
 {
     auto jsonObject = ParseUtil::ExtractJsonValue(rootJson, key);
-    T result = jsonObject.empty() ? defaultValue : deserializer(jsonObject, defaultValue);
+    T result = jsonObject.is_null() ? defaultValue : deserializer(jsonObject, defaultValue);
     return result;
 }
 
 template <typename T>
 std::shared_ptr<T> ParseUtil::GetActionFromJsonValue(
-    const Json::Value& json,
-    const std::unordered_map<ActionType, std::function<std::shared_ptr<T>(const Json::Value&)>, EnumHash>& parsers)
+    const Mso::Json::value& json,
+    const std::unordered_map<ActionType, std::function<std::shared_ptr<T>(const Mso::Json::value&)>, EnumHash>& parsers)
 {
-    if (json.empty() || !json.isObject())
+    if (json.is_null() || !json.is_object())
     {
-        throw AdaptiveCardParseException("Expected a Json object to extract Action element");
+        throw AdaptiveCardParseException(L"Expected a Json object to extract Action element");
     }
     // Get the action's type
     ActionType actionType = ParseUtil::TryGetActionType(json);

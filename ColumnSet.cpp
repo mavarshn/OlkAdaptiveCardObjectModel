@@ -6,7 +6,7 @@
 
 using namespace AdaptiveCards;
 
-const std::unordered_map<CardElementType, std::function<std::shared_ptr<Column>(const Json::Value&)>, EnumHash> ColumnSet::ColumnParser =
+const std::unordered_map<CardElementType, std::function<std::shared_ptr<Column>(const Mso::Json::value&)>, EnumHash> ColumnSet::ColumnParser =
 {
     { CardElementType::Column, Column::Deserialize }
 };
@@ -29,27 +29,29 @@ std::vector<std::shared_ptr<Column>>& ColumnSet::GetColumns()
     return m_columns;
 }
 
-std::string ColumnSet::Serialize()
+std::wstring ColumnSet::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value ColumnSet::SerializeToJsonValue()
+Mso::Json::value ColumnSet::SerializeToJsonValue()
 {
-    Json::Value root = BaseCardElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseCardElement::SerializeToJsonValue();
 
-    std::string propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Columns);
-    root[propertyName] = Json::Value(Json::arrayValue);
+    std::wstring propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Columns);
+
+    root[propertyName] = Mso::Json::value::array();
+    
+    int i = 0;
     for (const auto& column : GetColumns())
     {
-        root[propertyName].append(column->SerializeToJsonValue());
+        root[propertyName][i++] = column->SerializeToJsonValue();
     }
-
     return root;
 }
 
-std::shared_ptr<ColumnSet> ColumnSet::Deserialize(const Json::Value& value)
+std::shared_ptr<ColumnSet> ColumnSet::Deserialize(const Mso::Json::value& value)
 {
     ParseUtil::ExpectTypeString(value, CardElementType::ColumnSet);
 
@@ -61,7 +63,7 @@ std::shared_ptr<ColumnSet> ColumnSet::Deserialize(const Json::Value& value)
     return container;
 }
 
-std::shared_ptr<ColumnSet> ColumnSet::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<ColumnSet> ColumnSet::DeserializeFromString(const std::wstring& jsonString)
 {
     return ColumnSet::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }

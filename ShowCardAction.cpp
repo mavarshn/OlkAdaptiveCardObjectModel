@@ -9,32 +9,32 @@ ShowCardAction::ShowCardAction() : BaseActionElement(ActionType::ShowCard)
 {
 }
 
-std::shared_ptr<ShowCardAction> ShowCardAction::Deserialize(const Json::Value& json)
+std::shared_ptr<ShowCardAction> ShowCardAction::Deserialize(const Mso::Json::value& json)
 {
     std::shared_ptr<ShowCardAction> showCardAction = BaseActionElement::Deserialize<ShowCardAction>(json);
 
-    std::string propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Card);
-    showCardAction->SetCard(AdaptiveCard::Deserialize(json.get(propertyName, Json::Value())));
+    std::wstring propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Card);
+    showCardAction->SetCard(AdaptiveCard::Deserialize(ParseUtil::GetValue(json, propertyName)));
 
     return showCardAction;
 }
 
-std::shared_ptr<ShowCardAction> ShowCardAction::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<ShowCardAction> ShowCardAction::DeserializeFromString(const std::wstring& jsonString)
 {
     return ShowCardAction::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string ShowCardAction::Serialize()
+std::wstring ShowCardAction::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value ShowCardAction::SerializeToJsonValue()
+Mso::Json::value ShowCardAction::SerializeToJsonValue()
 {
-    Json::Value root = BaseActionElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseActionElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Card)] = GetCard()->SerializeToJsonValue();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Card)] = Mso::Json::value(GetCard()->SerializeToJsonValue());
 
     return root;
 }

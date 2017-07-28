@@ -11,17 +11,17 @@ class Column : public BaseCardElement
 {
 public:
     Column();
-    Column(SeparationStyle separation, std::string speak, std::string size);
-    Column(SeparationStyle separation, std::string speak, std::string size, std::vector<std::shared_ptr<BaseCardElement>>& items);
+    Column(SeparationStyle separation, std::wstring speak, std::wstring size);
+    Column(SeparationStyle separation, std::wstring speak, std::wstring size, std::vector<std::shared_ptr<BaseCardElement>>& items);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
-    static std::shared_ptr<Column> Deserialize(const Json::Value& root);
-    static std::shared_ptr<Column> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<Column> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<Column> DeserializeFromString(const std::wstring& jsonString);
 
-    std::string GetSize() const;
-    void SetSize(const std::string value);
+    std::wstring GetSize() const;
+    void SetSize(const std::wstring value);
 
     std::vector<std::shared_ptr<BaseCardElement>>& GetItems();
     const std::vector<std::shared_ptr<BaseCardElement>>& GetItems() const;
@@ -30,8 +30,8 @@ public:
     void SetSelectAction(const std::shared_ptr<BaseActionElement> action);
 
 private:
-    static const std::unordered_map<CardElementType, std::function<std::shared_ptr<BaseCardElement>(const Json::Value&)>, EnumHash> CardElementParsers;
-    std::string m_size;
+    static const std::unordered_map<CardElementType, std::function<std::shared_ptr<BaseCardElement>(const Mso::Json::value&)>, EnumHash> CardElementParsers;
+    std::wstring m_size;
     std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement>> m_items;
     std::shared_ptr<BaseActionElement> m_selectAction;
 };

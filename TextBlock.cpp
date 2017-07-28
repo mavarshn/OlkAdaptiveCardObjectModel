@@ -17,8 +17,8 @@ TextBlock::TextBlock() :
 }
 
 TextBlock::TextBlock(SeparationStyle separationStyle,
-    std::string speak,
-    std::string text,
+    std::wstring speak,
+    std::wstring text,
     TextSize textSize,
     TextWeight textWeight,
     TextColor textColor,
@@ -38,7 +38,7 @@ TextBlock::TextBlock(SeparationStyle separationStyle,
 {
 }
 
-std::shared_ptr<TextBlock> TextBlock::Deserialize(const Json::Value& json)
+std::shared_ptr<TextBlock> TextBlock::Deserialize(const Mso::Json::value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::TextBlock);
 
@@ -56,40 +56,40 @@ std::shared_ptr<TextBlock> TextBlock::Deserialize(const Json::Value& json)
     return textBlock;
 }
 
-std::shared_ptr<TextBlock> TextBlock::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<TextBlock> TextBlock::DeserializeFromString(const std::wstring& jsonString)
 {
     return TextBlock::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string TextBlock::Serialize()
+std::wstring TextBlock::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value TextBlock::SerializeToJsonValue()
+Mso::Json::value TextBlock::SerializeToJsonValue()
 {
-    Json::Value root = BaseCardElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseCardElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size)] = TextSizeToString(GetTextSize());
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Color)] = TextColorToString(GetTextColor());
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Weight)] = TextWeightToString(GetTextWeight());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size)] = Mso::Json::value(TextSizeToString(GetTextSize()));
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Color)] = Mso::Json::value(TextColorToString(GetTextColor()));
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Weight)] = Mso::Json::value(TextWeightToString(GetTextWeight()));
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalAlignment)] = 
-        HorizontalAlignmentToString(GetHorizontalAlignment());
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MaxLines)] = GetMaxLines();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsSubtle)] = GetIsSubtle();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Wrap)] = GetWrap();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Text)] = GetText();
+        Mso::Json::value(HorizontalAlignmentToString(GetHorizontalAlignment()));
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MaxLines)] = Mso::Json::value(static_cast<int>(GetMaxLines()));
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsSubtle)] = Mso::Json::value(GetIsSubtle());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Wrap)] = Mso::Json::value(GetWrap());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Text)] = Mso::Json::value(GetText());
 
     return root;
 }
 
-std::string TextBlock::GetText() const
+std::wstring TextBlock::GetText() const
 {
     return m_text;
 }
 
-void TextBlock::SetText(const std::string value)
+void TextBlock::SetText(const std::wstring value)
 {
     m_text = value;
 }

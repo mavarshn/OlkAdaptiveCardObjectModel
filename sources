@@ -20,6 +20,9 @@ USE_INCREMENTAL_LINKING=1
 
 #LINKLIBS=\
 
+#PRECOMPILED_CXX=1
+#PRECOMPILED_INCLUDE=stdafx.h
+
 SOURCES=\
 	AdaptiveCardParseException.cpp \
 	BaseActionElement.cpp \
@@ -38,7 +41,6 @@ SOURCES=\
 	HttpAction.cpp \
 	Image.cpp \
 	ImageSet.cpp \
-	jsoncpp.cpp \
 	NumberInput.cpp \
 	OpenUrlAction.cpp \
 	ParseUtil.cpp \
@@ -50,8 +52,4 @@ SOURCES=\
 	TimeInput.cpp \
 	ToggleInput.cpp \
 
-UMTYPE=windows
-
-#PRECOMPILED_CXX=1
-#PRECOMPILED_INCLUDE=stdafx.h
 

@@ -13,11 +13,11 @@ AdaptiveCards::Image::Image() :
 }
 
 AdaptiveCards::Image::Image(AdaptiveCards::SeparationStyle separationStyle,
-    std::string speak,
-    std::string url,
+    std::wstring speak,
+    std::wstring url,
 	AdaptiveCards::ImageStyle imageStyle,
 	AdaptiveCards::ImageSize imageSize,
-    std::string altText,
+    std::wstring altText,
 	AdaptiveCards::HorizontalAlignment hAlignment) :
     BaseCardElement(CardElementType::Image, separationStyle, speak),
     m_url(url),
@@ -28,7 +28,7 @@ AdaptiveCards::Image::Image(AdaptiveCards::SeparationStyle separationStyle,
 {
 }
 
-std::shared_ptr<AdaptiveCards::Image> AdaptiveCards::Image::Deserialize(const Json::Value& json)
+std::shared_ptr<AdaptiveCards::Image> AdaptiveCards::Image::Deserialize(const Mso::Json::value& json)
 {
     ParseUtil::ExpectTypeString(json, AdaptiveCards::CardElementType::Image);
 
@@ -44,34 +44,34 @@ std::shared_ptr<AdaptiveCards::Image> AdaptiveCards::Image::Deserialize(const Js
     return image;
 }
 
-std::string AdaptiveCards::Image::Serialize()
+std::wstring AdaptiveCards::Image::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value AdaptiveCards::Image::SerializeToJsonValue()
+Mso::Json::value AdaptiveCards::Image::SerializeToJsonValue()
 {
-    Json::Value root = BaseCardElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseCardElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size)] = ImageSizeToString(GetImageSize());
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)] = ImageStyleToString(GetImageStyle());
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Url)] = GetUrl();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size)] = Mso::Json::value(ImageSizeToString(GetImageSize()));
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)] = Mso::Json::value(ImageStyleToString(GetImageStyle()));
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Url)] = Mso::Json::value(GetUrl());
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalAlignment)] =
-        HorizontalAlignmentToString(GetHorizontalAlignment());
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::AltText)] = GetAltText();
+        Mso::Json::value(HorizontalAlignmentToString(GetHorizontalAlignment()));
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::AltText)] = Mso::Json::value(GetAltText());
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)] = BaseCardElement::SerializeSelectAction(GetSelectAction());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)] = Mso::Json::value(BaseCardElement::SerializeSelectAction(GetSelectAction()));
 
     return root;
 }
 
-std::string AdaptiveCards::Image::GetUrl() const
+std::wstring AdaptiveCards::Image::GetUrl() const
 {
     return m_url;
 }
 
-void AdaptiveCards::Image::SetUrl(const std::string value)
+void AdaptiveCards::Image::SetUrl(const std::wstring value)
 {
     m_url = value;
 }
@@ -96,12 +96,12 @@ void AdaptiveCards::Image::SetImageSize(const ImageSize value)
     m_imageSize = value;
 }
 
-std::string AdaptiveCards::Image::GetAltText() const
+std::wstring AdaptiveCards::Image::GetAltText() const
 {
     return m_altText;
 }
 
-void AdaptiveCards::Image::SetAltText(const std::string value)
+void AdaptiveCards::Image::SetAltText(const std::wstring value)
 {
     m_altText = value;
 }
@@ -116,7 +116,7 @@ void AdaptiveCards::Image::SetHorizontalAlignment(const HorizontalAlignment valu
     m_hAlignment = value;
 }
 
-std::shared_ptr<AdaptiveCards::Image> AdaptiveCards::Image::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<AdaptiveCards::Image> AdaptiveCards::Image::DeserializeFromString(const std::wstring& jsonString)
 {
     return AdaptiveCards::Image::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }

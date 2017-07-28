@@ -8,7 +8,7 @@ HttpAction::HttpAction() : BaseActionElement(ActionType::Http)
 {
 }
 
-std::shared_ptr<HttpAction> HttpAction::Deserialize(const Json::Value& json)
+std::shared_ptr<HttpAction> HttpAction::Deserialize(const Mso::Json::value& json)
 {
     std::shared_ptr<HttpAction> httpAction = BaseActionElement::Deserialize<HttpAction>(json);
 
@@ -19,57 +19,57 @@ std::shared_ptr<HttpAction> HttpAction::Deserialize(const Json::Value& json)
     return httpAction;
 }
 
-std::shared_ptr<HttpAction> HttpAction::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<HttpAction> HttpAction::DeserializeFromString(const std::wstring& jsonString)
 {
-    Json::Value jsonValue(jsonString);
+    Mso::Json::value jsonValue(jsonString);
 
     return HttpAction::Deserialize(jsonValue);
 }
 
-std::string HttpAction::Serialize()
+std::wstring HttpAction::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value HttpAction::SerializeToJsonValue()
+Mso::Json::value HttpAction::SerializeToJsonValue()
 {
-    Json::Value root = BaseActionElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseActionElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Url)] = GetUrl();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Body)] = GetBody();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Method)] = GetMethod();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Url)] = Mso::Json::value(GetUrl());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Body)] = Mso::Json::value(GetBody());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Method)] = Mso::Json::value(GetMethod());
 
     return root;
 }
 
 
-std::string HttpAction::GetUrl() const
+std::wstring HttpAction::GetUrl() const
 {
     return m_url;
 }
 
-void HttpAction::SetUrl(const std::string value)
+void HttpAction::SetUrl(const std::wstring value)
 {
     m_url = value;
 }
 
-std::string HttpAction::GetBody() const
+std::wstring HttpAction::GetBody() const
 {
     return m_body;
 }
 
-void HttpAction::SetBody(const std::string value)
+void HttpAction::SetBody(const std::wstring value)
 {
     m_body = value;
 }
 
-std::string HttpAction::GetMethod() const
+std::wstring HttpAction::GetMethod() const
 {
     return m_method;
 }
 
-void HttpAction::SetMethod(const std::string value)
+void HttpAction::SetMethod(const std::wstring value)
 {
     m_method = value;
 }

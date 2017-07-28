@@ -13,7 +13,7 @@ ImageSet::ImageSet() :
 
 ImageSet::ImageSet(
     SeparationStyle separation,
-    std::string speak,
+    std::wstring speak,
     std::vector<std::shared_ptr<AdaptiveCards::Image>>& images) :
     BaseCardElement(CardElementType::ImageSet, separation, speak),
     m_images(images),
@@ -23,7 +23,7 @@ ImageSet::ImageSet(
 
 ImageSet::ImageSet(
     SeparationStyle separation,
-    std::string speak) :
+    std::wstring speak) :
     BaseCardElement(CardElementType::ImageSet, separation, speak),
     m_imageSize(ImageSize::Auto)
 {
@@ -49,29 +49,30 @@ std::vector<std::shared_ptr<AdaptiveCards::Image>>& ImageSet::GetImages()
     return m_images;
 }
 
-std::string ImageSet::Serialize()
+std::wstring ImageSet::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+   
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value ImageSet::SerializeToJsonValue()
+Mso::Json::value ImageSet::SerializeToJsonValue()
 {
-    Json::Value root = BaseCardElement::SerializeToJsonValue();
+    Mso::Json::value root = BaseCardElement::SerializeToJsonValue();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ImageSize)] = ImageSizeToString(GetImageSize());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ImageSize)] = Mso::Json::value(ImageSizeToString(GetImageSize()));
 
-    std::string itemsPropertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Images);
-    root[itemsPropertyName] = Json::Value(Json::arrayValue);
+    std::wstring itemsPropertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Images);
+    root[itemsPropertyName] = Mso::Json::value::array();
+    int i = 0;
     for (const auto& image : GetImages())
     {
-        root[itemsPropertyName].append(image->SerializeToJsonValue());
+        root[itemsPropertyName][i++] = image->SerializeToJsonValue();
     }
 
     return root;
 }
 
-std::shared_ptr<ImageSet> ImageSet::Deserialize(const Json::Value& value)
+std::shared_ptr<ImageSet> ImageSet::Deserialize(const Mso::Json::value& value)
 {
     ParseUtil::ExpectTypeString(value, CardElementType::ImageSet);
 
@@ -85,9 +86,9 @@ std::shared_ptr<ImageSet> ImageSet::Deserialize(const Json::Value& value)
     std::vector<std::shared_ptr<AdaptiveCards::Image>> images;
 
     // Deserialize every image in the array
-    for (const Json::Value& element : imagesArray)
+    for (auto & element : imagesArray)
     {
-        auto image = AdaptiveCards::Image::Deserialize(element);
+        auto image = AdaptiveCards::Image::Deserialize(element.second);
         if (image != nullptr)
         {
             images.push_back(image);
@@ -97,9 +98,9 @@ std::shared_ptr<ImageSet> ImageSet::Deserialize(const Json::Value& value)
     imageSet->m_images = std::move(images);
 
     return imageSet;
-}
+}\
 
-std::shared_ptr<ImageSet> ImageSet::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<ImageSet> ImageSet::DeserializeFromString(const std::wstring& jsonString)
 {
     return ImageSet::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }

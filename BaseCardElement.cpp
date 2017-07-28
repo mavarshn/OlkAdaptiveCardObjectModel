@@ -8,7 +8,7 @@
 
 using namespace AdaptiveCards;
 
-const std::unordered_map<ActionType, std::function<std::shared_ptr<BaseActionElement>(const Json::Value&)>, EnumHash> BaseCardElement::ActionParsers =
+const std::unordered_map<ActionType, std::function<std::shared_ptr<BaseActionElement>(const Mso::Json::value&)>, EnumHash> BaseCardElement::ActionParsers =
 {
     { ActionType::Http, HttpAction::Deserialize },
     { ActionType::OpenUrl, OpenUrlAction::Deserialize },
@@ -19,7 +19,7 @@ const std::unordered_map<ActionType, std::function<std::shared_ptr<BaseActionEle
 BaseCardElement::BaseCardElement(
     CardElementType type,
     SeparationStyle separationStyle,
-    std::string speak) :
+    std::wstring speak) :
     m_type(type),
     m_separationStyle(separationStyle),
     m_speak(speak)
@@ -27,7 +27,7 @@ BaseCardElement::BaseCardElement(
 }
 
 BaseCardElement::BaseCardElement(CardElementType type) :
-    m_type(type), m_separationStyle(SeparationStyle::Default), m_speak("")
+    m_type(type), m_separationStyle(SeparationStyle::Default), m_speak(L"")
 {
 }
 
@@ -45,12 +45,12 @@ void BaseCardElement::SetSeparationStyle(const SeparationStyle value)
     m_separationStyle = value;
 }
 
-std::string BaseCardElement::GetSpeak() const
+std::wstring BaseCardElement::GetSpeak() const
 {
     return m_speak;
 }
 
-void BaseCardElement::SetSpeak(const std::string value)
+void BaseCardElement::SetSpeak(const std::wstring value)
 {
     m_speak = value;
 }
@@ -60,31 +60,31 @@ const CardElementType AdaptiveCards::BaseCardElement::GetElementType() const
     return m_type;
 }
 
-Json::Value BaseCardElement::SerializeToJsonValue()
+Mso::Json::value BaseCardElement::SerializeToJsonValue()
  {
-    Json::Value root;
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Type)] = CardElementTypeToString(GetElementType());
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Speak)] = GetSpeak();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Separation)] = SeparationStyleToString(GetSeparationStyle());
+    Mso::Json::value root;
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Type)] = Mso::Json::value(CardElementTypeToString(GetElementType()));
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Speak)] = Mso::Json::value(GetSpeak());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Separation)] = Mso::Json::value(SeparationStyleToString(GetSeparationStyle()));
     return root;
 }
 
-std::shared_ptr<BaseActionElement> BaseCardElement::DeserializeSelectAction(const Json::Value & json, AdaptiveCardSchemaKey key)
+std::shared_ptr<BaseActionElement> BaseCardElement::DeserializeSelectAction(const Mso::Json::value & json, AdaptiveCardSchemaKey key)
 {
-    Json::Value selectActionValue = ParseUtil::ExtractJsonValue(json, key, false);
-    if (!selectActionValue.empty())
+    Mso::Json::value selectActionValue = ParseUtil::ExtractJsonValue(json, key, false);
+    if (!selectActionValue.is_null())
     {
         return ParseUtil::GetActionFromJsonValue<BaseActionElement>(selectActionValue, BaseCardElement::ActionParsers);
     }
     return nullptr;
 }
 
-Json::Value BaseCardElement::SerializeSelectAction(const std::shared_ptr<BaseActionElement> selectAction)
+Mso::Json::value BaseCardElement::SerializeSelectAction(const std::shared_ptr<BaseActionElement> selectAction)
 {
     if (selectAction != nullptr)
     {
         return selectAction->SerializeToJsonValue();
     }
-    return Json::Value();
+    return Mso::Json::value();
 }
 

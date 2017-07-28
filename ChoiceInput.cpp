@@ -10,7 +10,7 @@ ChoiceInput::ChoiceInput() :
 {
 }
 
-std::shared_ptr<ChoiceInput> ChoiceInput::Deserialize(const Json::Value& json)
+std::shared_ptr<ChoiceInput> ChoiceInput::Deserialize(const Mso::Json::value& json)
 {
     auto choice = std::make_shared<ChoiceInput>();
 
@@ -22,45 +22,44 @@ std::shared_ptr<ChoiceInput> ChoiceInput::Deserialize(const Json::Value& json)
     return choice;
 }
 
-std::shared_ptr<ChoiceInput> ChoiceInput::DeserializeFromString(const std::string& jsonString)
+std::shared_ptr<ChoiceInput> ChoiceInput::DeserializeFromString(const std::wstring& jsonString)
 {
     return ChoiceInput::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }
 
-std::string ChoiceInput::Serialize()
+std::wstring ChoiceInput::Serialize()
 {
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
+    return SerializeToJsonValue().to_string();
 }
 
-Json::Value ChoiceInput::SerializeToJsonValue()
+Mso::Json::value ChoiceInput::SerializeToJsonValue()
 {
-    Json::Value root;
+    Mso::Json::value root;
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title)] = GetTitle();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = GetValue();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Speak)] = GetSpeak();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsSelected)] = GetIsSelected();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title)] = Mso::Json::value(GetTitle());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = Mso::Json::value(GetValue());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Speak)] = Mso::Json::value(GetSpeak());
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsSelected)] = Mso::Json::value(GetIsSelected());
 
     return root;
 }
 
-std::string ChoiceInput::GetTitle() const
+std::wstring ChoiceInput::GetTitle() const
 {
     return m_title;
 }
 
-void ChoiceInput::SetTitle(const std::string title)
+void ChoiceInput::SetTitle(const std::wstring title)
 {
     m_title = title;
 }
 
-std::string ChoiceInput::GetValue() const
+std::wstring ChoiceInput::GetValue() const
 {
     return m_value;
 }
 
-void ChoiceInput::SetValue(const std::string value)
+void ChoiceInput::SetValue(const std::wstring value)
 {
     m_value = value;
 }
@@ -75,12 +74,12 @@ void AdaptiveCards::ChoiceInput::SetIsSelected(const bool isSelected)
     m_isSelected = isSelected;
 }
 
-std::string ChoiceInput::GetSpeak() const
+std::wstring ChoiceInput::GetSpeak() const
 {
     return m_speak;
 }
 
-void ChoiceInput::SetSpeak(const std::string value)
+void ChoiceInput::SetSpeak(const std::wstring value)
 {
     m_speak = value;
 }

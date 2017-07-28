@@ -2,7 +2,8 @@
 
 #include "stdafx.h"
 #include "Enums.h"
-#include "json/json.h"
+#include <jsondom/ijsondom.h>
+#include <jsondom/JsonCommon.h>
 
 namespace AdaptiveCards
 {
@@ -10,26 +11,26 @@ class Fact
 {
 public:
     Fact();
-    Fact(std::string title, std::string value, std::string speak);
+    Fact(std::wstring title, std::wstring value, std::wstring speak);
 
-    std::string Serialize();
-    Json::Value SerializeToJsonValue();
+    std::wstring Serialize();
+    Mso::Json::value SerializeToJsonValue();
 
-    std::string GetTitle() const;
-    void SetTitle(const std::string value);
+    std::wstring GetTitle() const;
+    void SetTitle(const std::wstring value);
 
-    std::string GetValue() const;
-    void SetValue(const std::string value);
+    std::wstring GetValue() const;
+    void SetValue(const std::wstring value);
 
-    std::string GetSpeak() const;
-    void SetSpeak(const std::string value);
+    std::wstring GetSpeak() const;
+    void SetSpeak(const std::wstring value);
 
-    static std::shared_ptr<Fact> Deserialize(const Json::Value& root);
-    static std::shared_ptr<Fact> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<Fact> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<Fact> DeserializeFromString(const std::wstring& jsonString);
 
 private:
-    std::string m_title;
-    std::string m_value;
-    std::string m_speak;
+    std::wstring m_title;
+    std::wstring m_value;
+    std::wstring m_speak;
 };
 }

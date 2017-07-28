@@ -11,28 +11,28 @@ class DateInput : public BaseInputElement
 public:
     DateInput();
 
-    static std::shared_ptr<DateInput> Deserialize(const Json::Value& root);
-    static std::shared_ptr<DateInput> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<DateInput> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<DateInput> DeserializeFromString(const std::wstring& jsonString);
 
-    virtual std::string Serialize();
-    virtual Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    virtual Mso::Json::value SerializeToJsonValue();
 
-    std::string GetMax() const;
-    void SetMax(const std::string value);
+    std::wstring GetMax() const;
+    void SetMax(const std::wstring value);
 
-    std::string GetMin() const;
-    void SetMin(const std::string value);
+    std::wstring GetMin() const;
+    void SetMin(const std::wstring value);
 
-    std::string GetPlaceholder() const;
-    void SetPlaceholder(const std::string value);
+    std::wstring GetPlaceholder() const;
+    void SetPlaceholder(const std::wstring value);
 
-    std::string GetValue() const;
-    void SetValue(const std::string value);
+    std::wstring GetValue() const;
+    void SetValue(const std::wstring value);
 
 private:
-    std::string m_max;
-    std::string m_min;
-    std::string m_placeholder;
-    std::string m_value;
+    std::wstring m_max;
+    std::wstring m_min;
+    std::wstring m_placeholder;
+    std::wstring m_value;
 };
 }

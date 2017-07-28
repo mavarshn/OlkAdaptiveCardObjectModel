@@ -11,28 +11,28 @@ class ToggleInput : public BaseInputElement
 public:
     ToggleInput();
 
-    static std::shared_ptr<ToggleInput> Deserialize(const Json::Value& root);
-    static std::shared_ptr<ToggleInput> DeserializeFromString(const std::string& jsonString);
+    static std::shared_ptr<ToggleInput> Deserialize(const Mso::Json::value& root);
+    static std::shared_ptr<ToggleInput> DeserializeFromString(const std::wstring& jsonString);
 
-    virtual std::string Serialize();
-    Json::Value SerializeToJsonValue();
+    virtual std::wstring Serialize();
+    Mso::Json::value SerializeToJsonValue();
 
-    std::string GetTitle() const;
-    void SetTitle(const std::string value);
+    std::wstring GetTitle() const;
+    void SetTitle(const std::wstring value);
 
-    std::string GetValue() const;
-    void SetValue(const std::string value);
+    std::wstring GetValue() const;
+    void SetValue(const std::wstring value);
 
-    std::string GetValueOff() const;
-    void SetValueOff(const std::string value);
+    std::wstring GetValueOff() const;
+    void SetValueOff(const std::wstring value);
 
-    std::string GetValueOn() const;
-    void SetValueOn(const std::string value);
+    std::wstring GetValueOn() const;
+    void SetValueOn(const std::wstring value);
 
 private:
-    std::string m_title;
-    std::string m_value;
-    std::string m_valueOff;
-    std::string m_valueOn;
+    std::wstring m_title;
+    std::wstring m_value;
+    std::wstring m_valueOff;
+    std::wstring m_valueOn;
 };
 }
