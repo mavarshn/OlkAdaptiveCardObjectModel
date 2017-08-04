@@ -13,7 +13,7 @@ ImageSet::ImageSet() :
 
 ImageSet::ImageSet(
     SeparationStyle separation,
-    std::wstring speak,
+    const std::wstring& speak,
     std::vector<std::shared_ptr<AdaptiveCards::Image>>& images) :
     BaseCardElement(CardElementType::ImageSet, separation, speak),
     m_images(images),

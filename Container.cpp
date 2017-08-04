@@ -37,7 +37,7 @@ Container::Container() : BaseCardElement(CardElementType::Container), m_style(Co
 
 Container::Container(
     SeparationStyle separation,
-    std::wstring speak,
+    const std::wstring& speak,
     ContainerStyle style,
     std::vector<std::shared_ptr<BaseCardElement>>& items) :
     BaseCardElement(CardElementType::Container, separation, speak),
@@ -48,7 +48,7 @@ Container::Container(
 
 Container::Container(
     SeparationStyle separation,
-    std::wstring speak,
+    const std::wstring& speak,
     ContainerStyle style) :
     BaseCardElement(CardElementType::Container, separation, speak),
     m_style(style)

@@ -16,7 +16,7 @@ public:
     BaseInputElement(CardElementType type, SeparationStyle separationStyle, std::wstring speak);
 
     std::wstring GetId() const;
-    void SetId(const std::wstring value);
+    void SetId(const std::wstring& value);
 
     template <typename T>
     static std::shared_ptr<T> Deserialize(const Mso::Json::value& json);

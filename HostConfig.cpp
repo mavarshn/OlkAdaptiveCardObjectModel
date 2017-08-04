@@ -5,7 +5,7 @@
 
 using namespace AdaptiveCards;
 
-HostConfig HostConfig::DeserializeFromString(const std::wstring jsonString)
+HostConfig HostConfig::DeserializeFromString(const std::wstring& jsonString)
 {
     return HostConfig::Deserialize(ParseUtil::GetJsonValueFromString(jsonString));
 }

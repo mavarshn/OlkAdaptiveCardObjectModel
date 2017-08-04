@@ -50,7 +50,7 @@ std::wstring DateInput::GetMax() const
     return m_max;
 }
 
-void DateInput::SetMax(const std::wstring value)
+void DateInput::SetMax(const std::wstring& value)
 {
     m_max = value;
 }
@@ -60,7 +60,7 @@ std::wstring DateInput::GetMin() const
     return m_min;
 }
 
-void DateInput::SetMin(const std::wstring value)
+void DateInput::SetMin(const std::wstring& value)
 {
     m_min = value;
 }
@@ -70,7 +70,7 @@ std::wstring DateInput::GetPlaceholder() const
     return m_placeholder;
 }
 
-void DateInput::SetPlaceholder(const std::wstring value)
+void DateInput::SetPlaceholder(const std::wstring& value)
 {
     m_placeholder = value;
 }
@@ -80,7 +80,7 @@ std::wstring DateInput::GetValue() const
     return m_value;
 }
 
-void DateInput::SetValue(const std::wstring value)
+void DateInput::SetValue(const std::wstring& value)
 {
     m_value = value;
 }

@@ -27,7 +27,7 @@ std::wstring BaseActionElement::GetSpeak() const
     return m_speak;
 }
 
-void BaseActionElement::SetSpeak(const std::wstring value)
+void BaseActionElement::SetSpeak(const std::wstring& value)
 {
     m_speak = value;
 }
@@ -37,7 +37,7 @@ std::wstring BaseActionElement::GetTitle() const
     return m_title;
 }
 
-void BaseActionElement::SetTitle(const std::wstring value)
+void BaseActionElement::SetTitle(const std::wstring& value)
 {
     m_title = value;
 }

@@ -53,7 +53,7 @@ std::wstring NumberInput::GetPlaceholder() const
     return m_placeholder;
 }
 
-void NumberInput::SetPlaceholder(const std::wstring value)
+void NumberInput::SetPlaceholder(const std::wstring& value)
 {
     m_placeholder = value;
 }

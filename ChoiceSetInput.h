@@ -13,7 +13,7 @@ class ChoiceSetInput : public BaseInputElement
 public:
     ChoiceSetInput();
     ChoiceSetInput(SeparationStyle separation, std::wstring speak);
-    ChoiceSetInput(SeparationStyle separation, std::wstring speak, std::vector<std::shared_ptr<ChoiceInput>>& choices);
+    ChoiceSetInput(SeparationStyle separation, const std::wstring& speak, std::vector<std::shared_ptr<ChoiceInput>>& choices);
 
     virtual std::wstring Serialize();
     virtual Mso::Json::value SerializeToJsonValue();

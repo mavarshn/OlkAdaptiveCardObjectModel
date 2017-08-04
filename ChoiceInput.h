@@ -16,16 +16,16 @@ public:
     Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetTitle() const;
-    void SetTitle(const std::wstring value);
+    void SetTitle(const std::wstring& value);
 
     std::wstring GetValue() const;
-    void SetValue(const std::wstring value);
+    void SetValue(const std::wstring& value);
 
     bool GetIsSelected() const;
     void SetIsSelected(const bool value);
 
     std::wstring GetSpeak() const;
-    void SetSpeak(const std::wstring value);
+    void SetSpeak(const std::wstring& value);
 
     static std::shared_ptr<ChoiceInput> Deserialize(const Mso::Json::value& root);
     static std::shared_ptr<ChoiceInput> DeserializeFromString(const std::wstring& jsonString);

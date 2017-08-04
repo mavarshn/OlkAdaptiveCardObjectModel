@@ -13,7 +13,7 @@ AdaptiveCards::Image::Image() :
 }
 
 AdaptiveCards::Image::Image(AdaptiveCards::SeparationStyle separationStyle,
-    std::wstring speak,
+    const std::wstring& speak,
     std::wstring url,
 	AdaptiveCards::ImageStyle imageStyle,
 	AdaptiveCards::ImageSize imageSize,
@@ -71,7 +71,7 @@ std::wstring AdaptiveCards::Image::GetUrl() const
     return m_url;
 }
 
-void AdaptiveCards::Image::SetUrl(const std::wstring value)
+void AdaptiveCards::Image::SetUrl(const std::wstring& value)
 {
     m_url = value;
 }
@@ -101,7 +101,7 @@ std::wstring AdaptiveCards::Image::GetAltText() const
     return m_altText;
 }
 
-void AdaptiveCards::Image::SetAltText(const std::wstring value)
+void AdaptiveCards::Image::SetAltText(const std::wstring& value)
 {
     m_altText = value;
 }

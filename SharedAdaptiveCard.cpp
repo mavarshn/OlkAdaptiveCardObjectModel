@@ -141,7 +141,7 @@ std::wstring AdaptiveCard::GetVersion() const
     return m_version;
 }
 
-void AdaptiveCard::SetVersion(const std::wstring value)
+void AdaptiveCard::SetVersion(const std::wstring& value)
 {
     m_version = value;
 }
@@ -151,7 +151,7 @@ std::wstring AdaptiveCard::GetMinVersion() const
     return m_minVersion;
 }
 
-void AdaptiveCard::SetMinVersion(const std::wstring value)
+void AdaptiveCard::SetMinVersion(const std::wstring& value)
 {
     m_minVersion = value;
 }
@@ -161,7 +161,7 @@ std::wstring AdaptiveCard::GetFallbackText() const
     return m_fallbackText;
 }
 
-void AdaptiveCard::SetFallbackText(const std::wstring value)
+void AdaptiveCard::SetFallbackText(const std::wstring& value)
 {
     m_fallbackText = value;
 }
@@ -171,7 +171,7 @@ std::wstring AdaptiveCard::GetBackgroundImageUrl() const
     return m_backgroundImageUrl;
 }
 
-void AdaptiveCard::SetBackgroundImageUrl(const std::wstring value)
+void AdaptiveCard::SetBackgroundImageUrl(const std::wstring& value)
 {
     m_backgroundImageUrl = value;
 }

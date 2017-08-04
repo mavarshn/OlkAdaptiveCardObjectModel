@@ -38,7 +38,7 @@ Column::Column() : BaseCardElement(CardElementType::Column), m_size(L"Auto")
 
 Column::Column(
     SeparationStyle separation,
-    std::wstring speak,
+    const std::wstring& speak,
     std::wstring size,
     std::vector<std::shared_ptr<BaseCardElement>>& items) :
     BaseCardElement(CardElementType::Column, separation, speak), m_size(size), m_items(items)
@@ -47,7 +47,7 @@ Column::Column(
 
 Column::Column(
     SeparationStyle separation,
-    std::wstring speak,
+    const std::wstring& speak,
     std::wstring size) :
     BaseCardElement(CardElementType::Column, separation, speak), m_size(size)
 {
@@ -58,7 +58,7 @@ std::wstring Column::GetSize() const
     return m_size;
 }
 
-void Column::SetSize(const std::wstring value)
+void Column::SetSize(const std::wstring& value)
 {
     m_size = value;
 }

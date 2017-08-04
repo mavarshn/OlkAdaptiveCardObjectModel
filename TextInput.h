@@ -18,10 +18,10 @@ public:
     Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetPlaceholder() const;
-    void SetPlaceholder(const std::wstring value);
+    void SetPlaceholder(const std::wstring& value);
 
     std::wstring GetValue() const;
-    void SetValue(const std::wstring value);
+    void SetValue(const std::wstring& value);
 
     bool GetIsMultiline() const;
     void SetIsMultiline(const bool value);

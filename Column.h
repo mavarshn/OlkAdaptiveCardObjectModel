@@ -11,8 +11,8 @@ class Column : public BaseCardElement
 {
 public:
     Column();
-    Column(SeparationStyle separation, std::wstring speak, std::wstring size);
-    Column(SeparationStyle separation, std::wstring speak, std::wstring size, std::vector<std::shared_ptr<BaseCardElement>>& items);
+    Column(SeparationStyle separation, const std::wstring& speak, std::wstring size);
+    Column(SeparationStyle separation, const std::wstring& speak, std::wstring size, std::vector<std::shared_ptr<BaseCardElement>>& items);
 
     virtual std::wstring Serialize();
     virtual Mso::Json::value SerializeToJsonValue();
@@ -21,7 +21,7 @@ public:
     static std::shared_ptr<Column> DeserializeFromString(const std::wstring& jsonString);
 
     std::wstring GetSize() const;
-    void SetSize(const std::wstring value);
+    void SetSize(const std::wstring& value);
 
     std::vector<std::shared_ptr<BaseCardElement>>& GetItems();
     const std::vector<std::shared_ptr<BaseCardElement>>& GetItems() const;

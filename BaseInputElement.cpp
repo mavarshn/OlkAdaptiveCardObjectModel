@@ -19,7 +19,7 @@ std::wstring BaseInputElement::GetId() const
     return m_id;
 }
 
-void BaseInputElement::SetId(const std::wstring value)
+void BaseInputElement::SetId(const std::wstring& value)
 {
     m_id = value;
 }

@@ -42,7 +42,7 @@ std::wstring OpenUrlAction::GetUrl() const
     return m_url;
 }
 
-void OpenUrlAction::SetUrl(const std::wstring value)
+void OpenUrlAction::SetUrl(const std::wstring& value)
 {
     m_url = value;
 }

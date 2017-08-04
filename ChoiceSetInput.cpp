@@ -11,7 +11,7 @@ ChoiceSetInput::ChoiceSetInput() : BaseInputElement(CardElementType::ChoiceSetIn
 
 ChoiceSetInput::ChoiceSetInput(
     SeparationStyle separation,
-    std::wstring speak,
+    const std::wstring& speak,
     std::vector<std::shared_ptr<ChoiceInput>>& choices) :
     BaseInputElement(CardElementType::ChoiceSetInput, separation, speak),
     m_choices(choices)

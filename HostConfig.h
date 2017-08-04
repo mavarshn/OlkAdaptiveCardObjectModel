@@ -242,6 +242,6 @@ struct HostConfig
     ActionsConfig actions;
 
     static HostConfig Deserialize(const Mso::Json::value& json);
-    static HostConfig DeserializeFromString(const std::wstring jsonString);
+    static HostConfig DeserializeFromString(const std::wstring& jsonString);
 };
 }

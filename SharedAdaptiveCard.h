@@ -23,13 +23,13 @@ public:
         std::vector<std::shared_ptr<BaseActionElement>>& actions);
 
     std::wstring GetVersion() const;
-    void SetVersion(const std::wstring value);
+    void SetVersion(const std::wstring& value);
     std::wstring GetMinVersion() const;
-    void SetMinVersion(const std::wstring value);
+    void SetMinVersion(const std::wstring& value);
     std::wstring GetFallbackText() const;
-    void SetFallbackText(const std::wstring value);
+    void SetFallbackText(const std::wstring& value);
     std::wstring GetBackgroundImageUrl () const;
-    void SetBackgroundImageUrl(const std::wstring value);
+    void SetBackgroundImageUrl(const std::wstring& value);
 
     std::vector<std::shared_ptr<BaseCardElement>>& GetBody();
     const std::vector<std::shared_ptr<BaseCardElement>>& GetBody() const;

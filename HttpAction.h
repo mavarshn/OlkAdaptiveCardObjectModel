@@ -18,13 +18,13 @@ public:
     virtual Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetUrl() const;
-    void SetUrl(const std::wstring value);
+    void SetUrl(const std::wstring& value);
 
     std::wstring GetMethod() const;
-    void SetMethod(const std::wstring value);
+    void SetMethod(const std::wstring& value);
 
     std::wstring GetBody() const;
-    void SetBody(const std::wstring value);
+    void SetBody(const std::wstring& value);
 
 private:
     std::wstring m_method;

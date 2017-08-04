@@ -11,7 +11,7 @@ class TextBlock : public BaseCardElement
 public:
     TextBlock();
     TextBlock(SeparationStyle separationStyle,
-        std::wstring speak,
+        const std::wstring& speak,
         std::wstring text,
         TextSize textSize,
         TextWeight textWeight,
@@ -28,7 +28,7 @@ public:
     virtual Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetText() const;
-    void SetText(const std::wstring value);
+    void SetText(const std::wstring& value);
 
     TextSize GetTextSize() const;
     void SetTextSize(const TextSize value);

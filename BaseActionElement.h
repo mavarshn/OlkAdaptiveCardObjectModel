@@ -17,10 +17,10 @@ public:
     virtual ~BaseActionElement();
 
     std::wstring GetSpeak() const;
-    void SetSpeak(const std::wstring value);
+    void SetSpeak(const std::wstring& value);
 
     std::wstring GetTitle() const;
-    void SetTitle(const std::wstring value);
+    void SetTitle(const std::wstring& value);
 
     const ActionType GetElementType() const;
 

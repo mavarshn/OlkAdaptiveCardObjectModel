@@ -17,7 +17,7 @@ TextBlock::TextBlock() :
 }
 
 TextBlock::TextBlock(SeparationStyle separationStyle,
-    std::wstring speak,
+    const std::wstring& speak,
     std::wstring text,
     TextSize textSize,
     TextWeight textWeight,
@@ -89,7 +89,7 @@ std::wstring TextBlock::GetText() const
     return m_text;
 }
 
-void TextBlock::SetText(const std::wstring value)
+void TextBlock::SetText(const std::wstring& value)
 {
     m_text = value;
 }

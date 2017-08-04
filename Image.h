@@ -12,7 +12,7 @@ class Image : public BaseCardElement
 public:
     Image();
     Image(SeparationStyle separationStyle,
-        std::wstring speak,
+        const std::wstring& speak,
         std::wstring uri,
         ImageStyle imageStyle,
         ImageSize imageSize,
@@ -26,7 +26,7 @@ public:
     virtual Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetUrl() const;
-    void SetUrl(const std::wstring value);
+    void SetUrl(const std::wstring& value);
 
     ImageStyle GetImageStyle() const;
     void SetImageStyle(const ImageStyle value);
@@ -35,7 +35,7 @@ public:
     void SetImageSize(const ImageSize value);
 
     std::wstring GetAltText() const;
-    void SetAltText(const std::wstring value);
+    void SetAltText(const std::wstring& value);
 
     HorizontalAlignment GetHorizontalAlignment() const;
     void SetHorizontalAlignment(const HorizontalAlignment value);

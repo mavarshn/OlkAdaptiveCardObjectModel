@@ -18,16 +18,16 @@ public:
     virtual Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetMax() const;
-    void SetMax(const std::wstring value);
+    void SetMax(const std::wstring& value);
 
     std::wstring GetMin() const;
-    void SetMin(const std::wstring value);
+    void SetMin(const std::wstring& value);
 
     std::wstring GetPlaceholder() const;
-    void SetPlaceholder(const std::wstring value);
+    void SetPlaceholder(const std::wstring& value);
 
     std::wstring GetValue() const;
-    void SetValue(const std::wstring value);
+    void SetValue(const std::wstring& value);
 
 private:
     std::wstring m_max;

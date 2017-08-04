@@ -22,7 +22,7 @@ public:
     void SetSeparationStyle(const SeparationStyle value);
 
     std::wstring GetSpeak() const;
-    void SetSpeak(const std::wstring value);
+    void SetSpeak(const std::wstring& value);
 
     const CardElementType GetElementType() const;
 

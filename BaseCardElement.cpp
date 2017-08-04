@@ -50,7 +50,7 @@ std::wstring BaseCardElement::GetSpeak() const
     return m_speak;
 }
 
-void BaseCardElement::SetSpeak(const std::wstring value)
+void BaseCardElement::SetSpeak(const std::wstring& value)
 {
     m_speak = value;
 }

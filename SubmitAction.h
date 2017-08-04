@@ -12,7 +12,7 @@ public:
     SubmitAction();
 
     std::wstring GetDataJson() const;
-    void SetDataJson(const std::wstring value);
+    void SetDataJson(const std::wstring& value);
 
     static std::shared_ptr<SubmitAction> Deserialize(const Mso::Json::value& root);
     static std::shared_ptr<SubmitAction> DeserializeFromString(const std::wstring& jsonString);

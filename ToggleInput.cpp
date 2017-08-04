@@ -63,7 +63,7 @@ std::wstring ToggleInput::GetTitle() const
     return m_title;
 }
 
-void ToggleInput::SetTitle(const std::wstring value)
+void ToggleInput::SetTitle(const std::wstring& value)
 {
     m_title = value;
 }
@@ -73,11 +73,11 @@ std::wstring ToggleInput::GetValue() const
     return m_value;
 }
 
-void ToggleInput::SetValue(const std::wstring value)
+void ToggleInput::SetValue(const std::wstring& value)
 {
     m_value = value;
 }
-void ToggleInput::SetValueOff(const std::wstring valueOff)
+void ToggleInput::SetValueOff(const std::wstring& valueOff)
 {
     m_valueOff = valueOff;
 }
@@ -92,7 +92,7 @@ std::wstring ToggleInput::GetValueOn() const
     return m_valueOn;
 }
 
-void ToggleInput::SetValueOn(const std::wstring valueOn)
+void ToggleInput::SetValueOn(const std::wstring& valueOn)
 {
     m_valueOn = valueOn;
 }

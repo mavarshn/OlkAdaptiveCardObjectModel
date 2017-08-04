@@ -55,7 +55,7 @@ std::wstring TextInput::GetPlaceholder() const
     return m_placeholder;
 }
 
-void TextInput::SetPlaceholder(const std::wstring value)
+void TextInput::SetPlaceholder(const std::wstring& value)
 {
     m_placeholder = value;
 }
@@ -65,7 +65,7 @@ std::wstring TextInput::GetValue() const
     return m_value;
 }
 
-void TextInput::SetValue(const std::wstring value)
+void TextInput::SetValue(const std::wstring& value)
 {
     m_value = value;
 }

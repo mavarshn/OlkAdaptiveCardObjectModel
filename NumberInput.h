@@ -18,7 +18,7 @@ public:
     virtual Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetPlaceholder() const;
-    void SetPlaceholder(const std::wstring value);
+    void SetPlaceholder(const std::wstring& value);
 
     int GetValue() const;
     void SetValue(const int value);

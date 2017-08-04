@@ -5,7 +5,7 @@
 namespace AdaptiveCards
 {
 
-Mso::Json::value ParseUtil::GetValue(Mso::Json::value const &parent, const std::wstring &name)
+Mso::Json::value ParseUtil::GetValue(Mso::Json::value const &parent, const std::wstring& name)
 {
 	if (parent.is_object())
 	{
@@ -15,7 +15,7 @@ Mso::Json::value ParseUtil::GetValue(Mso::Json::value const &parent, const std::
 	return Mso::Json::value::nullvalue();
 }
 
-std::wstring ParseUtil::GetString(Mso::Json::value const &parent, const std::wstring &name, const wchar_t *defaultString)
+std::wstring ParseUtil::GetString(Mso::Json::value const &parent, const std::wstring& name, const wchar_t *defaultString)
 {
 	auto val = GetValue(parent, name);
 	if (val.is_string())
@@ -26,7 +26,7 @@ std::wstring ParseUtil::GetString(Mso::Json::value const &parent, const std::wst
 	return defaultString == nullptr ? std::wstring() : defaultString;
 }
 
-int32_t ParseUtil::GetInteger(Mso::Json::value const &parent, const std::wstring &name)
+int32_t ParseUtil::GetInteger(Mso::Json::value const &parent, const std::wstring& name)
 {
 	auto val = GetValue(parent, name);
 	if (val.is_number())
@@ -37,7 +37,7 @@ int32_t ParseUtil::GetInteger(Mso::Json::value const &parent, const std::wstring
 	return MAXINT32;
 }
 
-bool ParseUtil::GetBoolean(Mso::Json::value const &parent, const std::wstring &name, bool fDefault)
+bool ParseUtil::GetBoolean(Mso::Json::value const &parent, const std::wstring& name, bool fDefault)
 {
 	auto val = GetValue(parent, name);
 
@@ -322,7 +322,7 @@ Mso::Json::value ParseUtil::GetArray(
     return elementArray;
 }
 
-Mso::Json::value ParseUtil::GetJsonValueFromString(const std::wstring jsonString)
+Mso::Json::value ParseUtil::GetJsonValueFromString(const std::wstring& jsonString)
 {
     Mso::Json::value jsonValue;
     try

@@ -51,7 +51,7 @@ std::wstring TimeInput::GetMax() const
     return m_max;
 }
 
-void TimeInput::SetMax(const std::wstring value)
+void TimeInput::SetMax(const std::wstring& value)
 {
     m_max = value;
 }
@@ -61,7 +61,7 @@ std::wstring TimeInput::GetMin() const
     return m_min;
 }
 
-void TimeInput::SetMin(const std::wstring value)
+void TimeInput::SetMin(const std::wstring& value)
 {
     m_min = value;
 }
@@ -71,7 +71,7 @@ std::wstring TimeInput::GetPlaceholder() const
     return m_placeholder;
 }
 
-void TimeInput::SetPlaceholder(const std::wstring value)
+void TimeInput::SetPlaceholder(const std::wstring& value)
 {
     m_placeholder = value;
 }
@@ -81,7 +81,7 @@ std::wstring TimeInput::GetValue() const
     return m_value;
 }
 
-void TimeInput::SetValue(const std::wstring value)
+void TimeInput::SetValue(const std::wstring& value)
 {
     m_value = value;
 }

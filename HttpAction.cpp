@@ -49,7 +49,7 @@ std::wstring HttpAction::GetUrl() const
     return m_url;
 }
 
-void HttpAction::SetUrl(const std::wstring value)
+void HttpAction::SetUrl(const std::wstring& value)
 {
     m_url = value;
 }
@@ -59,7 +59,7 @@ std::wstring HttpAction::GetBody() const
     return m_body;
 }
 
-void HttpAction::SetBody(const std::wstring value)
+void HttpAction::SetBody(const std::wstring& value)
 {
     m_body = value;
 }
@@ -69,7 +69,7 @@ std::wstring HttpAction::GetMethod() const
     return m_method;
 }
 
-void HttpAction::SetMethod(const std::wstring value)
+void HttpAction::SetMethod(const std::wstring& value)
 {
     m_method = value;
 }

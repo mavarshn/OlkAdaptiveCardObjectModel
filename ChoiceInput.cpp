@@ -49,7 +49,7 @@ std::wstring ChoiceInput::GetTitle() const
     return m_title;
 }
 
-void ChoiceInput::SetTitle(const std::wstring title)
+void ChoiceInput::SetTitle(const std::wstring& title)
 {
     m_title = title;
 }
@@ -59,7 +59,7 @@ std::wstring ChoiceInput::GetValue() const
     return m_value;
 }
 
-void ChoiceInput::SetValue(const std::wstring value)
+void ChoiceInput::SetValue(const std::wstring& value)
 {
     m_value = value;
 }
@@ -79,7 +79,7 @@ std::wstring ChoiceInput::GetSpeak() const
     return m_speak;
 }
 
-void ChoiceInput::SetSpeak(const std::wstring value)
+void ChoiceInput::SetSpeak(const std::wstring& value)
 {
     m_speak = value;
 }

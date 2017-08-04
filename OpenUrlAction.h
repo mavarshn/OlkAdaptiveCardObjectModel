@@ -18,7 +18,7 @@ public:
     virtual Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetUrl() const;
-    void SetUrl(const std::wstring value);
+    void SetUrl(const std::wstring& value);
     
 private:
     std::wstring m_url;

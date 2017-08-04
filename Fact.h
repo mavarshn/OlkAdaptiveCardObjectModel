@@ -17,13 +17,13 @@ public:
     Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetTitle() const;
-    void SetTitle(const std::wstring value);
+    void SetTitle(const std::wstring& value);
 
     std::wstring GetValue() const;
-    void SetValue(const std::wstring value);
+    void SetValue(const std::wstring& value);
 
     std::wstring GetSpeak() const;
-    void SetSpeak(const std::wstring value);
+    void SetSpeak(const std::wstring& value);
 
     static std::shared_ptr<Fact> Deserialize(const Mso::Json::value& root);
     static std::shared_ptr<Fact> DeserializeFromString(const std::wstring& jsonString);

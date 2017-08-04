@@ -48,7 +48,7 @@ std::wstring Fact::GetTitle() const
     return m_title;
 }
 
-void Fact::SetTitle(const std::wstring value)
+void Fact::SetTitle(const std::wstring& value)
 {
     m_title = value;
 }
@@ -58,7 +58,7 @@ std::wstring Fact::GetValue() const
     return m_value;
 }
 
-void Fact::SetValue(const std::wstring value)
+void Fact::SetValue(const std::wstring& value)
 {
     m_value = value;
 }
@@ -68,7 +68,7 @@ std::wstring Fact::GetSpeak() const
     return m_speak;
 }
 
-void Fact::SetSpeak(const std::wstring value)
+void Fact::SetSpeak(const std::wstring& value)
 {
     m_speak = value;
 }

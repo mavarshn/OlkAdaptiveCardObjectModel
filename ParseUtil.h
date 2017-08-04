@@ -45,17 +45,17 @@ public:
 
     static Mso::Json::value GetArray(const Mso::Json::value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
 
-    static Mso::Json::value GetJsonValueFromString(const std::wstring jsonString);
+    static Mso::Json::value GetJsonValueFromString(const std::wstring& jsonString);
 
     static Mso::Json::value ExtractJsonValue(const Mso::Json::value& jsonRoot, AdaptiveCardSchemaKey key, bool isRequired = false);
 
-    static Mso::Json::value GetValue(Mso::Json::value const &parent, const std::wstring &name);
+    static Mso::Json::value GetValue(Mso::Json::value const &parent, const std::wstring& name);
 
-    static std::wstring GetString(Mso::Json::value const &parent, const std::wstring &name, const wchar_t *defaultString = nullptr);
+    static std::wstring GetString(Mso::Json::value const &parent, const std::wstring& name, const wchar_t *defaultString = nullptr);
 
-    static int32_t GetInteger(Mso::Json::value const &parent, const std::wstring &name);
+    static int32_t GetInteger(Mso::Json::value const &parent, const std::wstring& name);
 
-    static bool GetBoolean(Mso::Json::value const &parent, const std::wstring &name, bool fDefault = false);
+    static bool GetBoolean(Mso::Json::value const &parent, const std::wstring& name, bool fDefault = false);
 
     template <typename T>
     static T GetEnumValue(

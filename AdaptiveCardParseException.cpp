@@ -5,7 +5,7 @@
 
 using namespace AdaptiveCards;
 
-AdaptiveCardParseException::AdaptiveCardParseException(const std::wstring & message) : m_message(message)
+AdaptiveCardParseException::AdaptiveCardParseException(const std::wstring&  message) : m_message(message)
 {
 }
 

@@ -523,7 +523,7 @@ const std::wstring ChoiceSetStyleToString(ChoiceSetStyle style)
     }
     return ChoiceSetStyleEnumToName[style];
 }
-ChoiceSetStyle ChoiceSetStyleFromString(const std::wstring & style)
+ChoiceSetStyle ChoiceSetStyleFromString(const std::wstring&  style)
 {
     if (ChoiceSetStyleNameToEnum.find(style) == ChoiceSetStyleNameToEnum.end())
     {
@@ -540,7 +540,7 @@ const std::wstring TextInputStyleToString(TextInputStyle style)
     }
     return TextInputStyleEnumToName[style];
 }
-TextInputStyle TextInputStyleFromString(const std::wstring & style)
+TextInputStyle TextInputStyleFromString(const std::wstring&  style)
 {
     if (TextInputStyleNameToEnum.find(style) == TextInputStyleNameToEnum.end())
     {
@@ -557,7 +557,7 @@ const std::wstring ContainerStyleToString(ContainerStyle style)
     }
     return ContainerStyleEnumToName[style];
 }
-ContainerStyle ContainerStyleFromString(const std::wstring & style)
+ContainerStyle ContainerStyleFromString(const std::wstring&  style)
 {
     if (ContainerStyleNameToEnum.find(style) == ContainerStyleNameToEnum.end())
     {
@@ -574,7 +574,7 @@ const std::wstring ActionAlignmentToString(ActionAlignment alignment)
     }
     return ActionAlignmentEnumToName[alignment];
 }
-ActionAlignment ActionAlignmentFromString(const std::wstring & alignment)
+ActionAlignment ActionAlignmentFromString(const std::wstring&  alignment)
 {
     if (ActionAlignmentNameToEnum.find(alignment) == ActionAlignmentNameToEnum.end())
     {

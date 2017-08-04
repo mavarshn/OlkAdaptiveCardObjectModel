@@ -13,7 +13,7 @@ std::wstring SubmitAction::GetDataJson() const
     return m_dataJson;
 }
 
-void SubmitAction::SetDataJson(const std::wstring value)
+void SubmitAction::SetDataJson(const std::wstring& value)
 {
     m_dataJson = value;
 }

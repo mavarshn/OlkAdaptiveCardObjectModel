@@ -11,7 +11,7 @@ FactSet::FactSet() : BaseCardElement(CardElementType::FactSet)
 
 FactSet::FactSet(
     SeparationStyle separation,
-    std::wstring speak,
+    const std::wstring& speak,
     std::vector<std::shared_ptr<Fact>>& facts) :
     BaseCardElement(CardElementType::FactSet, separation, speak),
     m_facts(facts)

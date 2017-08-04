@@ -13,7 +13,7 @@ class BaseCardElement;
         public:
         ImageSet();
         ImageSet(SeparationStyle separation, std::wstring speak);
-        ImageSet(SeparationStyle separation, std::wstring speak, std::vector<std::shared_ptr<Image>>& images);
+        ImageSet(SeparationStyle separation, const std::wstring& speak, std::vector<std::shared_ptr<Image>>& images);
 
         virtual std::wstring Serialize();
         virtual Mso::Json::value SerializeToJsonValue();

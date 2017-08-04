@@ -13,7 +13,7 @@ class FactSet : public BaseCardElement
 public:
     FactSet();
     FactSet(SeparationStyle separation, std::wstring speak);
-    FactSet(SeparationStyle separation, std::wstring speak, std::vector<std::shared_ptr<Fact>>& facts);
+    FactSet(SeparationStyle separation, const std::wstring& speak, std::vector<std::shared_ptr<Fact>>& facts);
 
     virtual std::wstring Serialize();
     virtual Mso::Json::value SerializeToJsonValue();

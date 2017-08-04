@@ -11,8 +11,8 @@ class Container : public BaseCardElement
 {
 public:
     Container();
-    Container(SeparationStyle separation, std::wstring speak, ContainerStyle style);
-    Container(SeparationStyle separation, std::wstring speak, ContainerStyle style, std::vector<std::shared_ptr<BaseCardElement>>& items);
+    Container(SeparationStyle separation, const std::wstring& speak, ContainerStyle style);
+    Container(SeparationStyle separation, const std::wstring& speak, ContainerStyle style, std::vector<std::shared_ptr<BaseCardElement>>& items);
 
     virtual std::wstring Serialize();
     Mso::Json::value SerializeToJsonValue();

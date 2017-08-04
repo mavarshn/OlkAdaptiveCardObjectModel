@@ -18,16 +18,16 @@ public:
     Mso::Json::value SerializeToJsonValue();
 
     std::wstring GetTitle() const;
-    void SetTitle(const std::wstring value);
+    void SetTitle(const std::wstring& value);
 
     std::wstring GetValue() const;
-    void SetValue(const std::wstring value);
+    void SetValue(const std::wstring& value);
 
     std::wstring GetValueOff() const;
-    void SetValueOff(const std::wstring value);
+    void SetValueOff(const std::wstring& value);
 
     std::wstring GetValueOn() const;
-    void SetValueOn(const std::wstring value);
+    void SetValueOn(const std::wstring& value);
 
 private:
     std::wstring m_title;
